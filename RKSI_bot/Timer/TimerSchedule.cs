@@ -1,4 +1,6 @@
-﻿using RKSI_bot.Groups;
+﻿using RKSI_bot.Databases;
+using RKSI_bot.Databases.PathDB;
+using RKSI_bot.Groups;
 using RKSI_bot.Web;
 using System;
 using System.Timers;
@@ -35,10 +37,10 @@ namespace RKSI_bot
             Console.WriteLine("### Timer Stopped ### \n");
             Timer.Stop();
 
-            var excelGroups = new ParsingRKSI().GetRecentsGroups().Result;
+            var excelGroups = new ParsingGroups().GetRecentsGroups();
             new ExcelGroups(@"D:\Users\gzaly\OneDrive\Рабочий стол\Groups.xlsx").SetDataExcel(excelGroups);
 
-            _ = new DataBase().ScheduleDataBase("id_person");
+            _ = new ScheduleDB(new LocalPathDB("Database")).SendScheduleFromDB("id_person");
 
             SchedulingTimer();
         }

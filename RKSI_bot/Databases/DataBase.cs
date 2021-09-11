@@ -1,4 +1,6 @@
-﻿using RKSI_bot.Web;
+﻿using RKSI_bot.Databases;
+using RKSI_bot.Databases.PathDB;
+using RKSI_bot.Web;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,20 +14,22 @@ namespace RKSI_bot
 {
     class DataBase
     {
-        public string PathToDB = System.IO.Path.GetFullPath(@"..\..\..\") + $@"Databases\";
+        private IPathDB pathToDB;
 
         private List<string> typesSqlCommand = new List<string>() { "Create", "Alter", "Drop", "Insert", "Update", "Delete" };
+
         private string textMessage;
         private long chatId;
 
-        public DataBase(string nameDB = "Database") 
+        public DataBase(IPathDB pathDB) 
         {
-            PathToDB += nameDB;
+            pathToDB = pathDB;
         }
 
-        public DataBase(string textMessage, long chatId, string nameDB = "Database")
+        public DataBase(string textMessage, long chatId, IPathDB pathDB)
         {
-            PathToDB += nameDB;
+            pathToDB = pathDB;
+
             this.textMessage = textMessage;
             this.chatId = chatId;
         }
@@ -58,32 +62,11 @@ namespace RKSI_bot
                 return false;
         }
 
-        public async Task ScheduleDataBase(string attribute, string table = "ttable")
-        {
-            using (SqlConnection connection = CheckConnection())
-            {
-                string sqlCommand = $"SELECT {attribute}, Facult FROM {table};";
-                SqlCommand command = new SqlCommand(sqlCommand, connection);
-
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    IDataRecord record = reader;
-                    Console.WriteLine(record[0].ToString() + " : " + record[1].ToString());
-                    try
-                    {
-                        await HttpRKSI.SendScheduleMessage(record[1].ToString(), Convert.ToInt64(record[0]));
-                    }catch(Exception exc)
-                    { Console.WriteLine(exc); }
-                }
-            }
-        }
-        private SqlConnection CheckConnection()
+        protected SqlConnection CheckConnection()
         {
             SqlConnection Connection = new SqlConnection();
 
-            Connection.ConnectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={PathToDB}.mdf;Integrated Security=True";
+            Connection.ConnectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={pathToDB.PathDB}.mdf;Integrated Security=True";
 
             if (Connection.State == ConnectionState.Closed)
                 try

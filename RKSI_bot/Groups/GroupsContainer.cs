@@ -6,18 +6,7 @@ namespace RKSI_bot
 {
     static class GroupsContainer
     {
-        private static string[] groups;
-        public static string[] Groups
-        {
-            get
-            {
-                return groups;
-            }
-            set
-            {
-                groups = value;
-            }
-        }
+        public static string[] Groups;
 
         static GroupsContainer()
         {

@@ -2,6 +2,7 @@
 using RKSI_bot.Comand_Message.Commands_Objects;
 using RKSI_bot.Comand_Message.Objects.Commands_Group_Objects;
 using RKSI_bot.Commands.Commands_Objects;
+using RKSI_bot.Groups;
 using RKSI_bot.ReservingObjects;
 using RKSI_bot.TelegramElements;
 using RKSI_bot.Web;
@@ -74,7 +75,7 @@ namespace RKSI_bot
                     default:
                         if (GroupsContainer.Groups.FirstOrDefault(group => group == message) != null)
                         {
-                            await HttpRKSI.SendScheduleMessage(message, chatId, true);
+                            await HttpRKSI.SendScheduleMessage(message, chatId, new ParsingGroups() ,true);
                         }
                         break;
                 }
@@ -83,15 +84,16 @@ namespace RKSI_bot
         private async Task ButtonsLogic(long chatId, int Cours)
         {
             TelegramMessageKeyboard telegramkeyboard = new TelegramMessageKeyboard();
+            SearchInArrays valueDictonarys = new SearchInArrays();
 
             var keyboard = telegramkeyboard.GetKeyboard(Cours, 3);
 
-            if (Program.CheckDictonary(in WillEditMessages, chatId))
+            if (valueDictonarys.GetBoolDictonary(in WillEditMessages, chatId))
             {
                 try
                 {
                     //Берем из словаря Ид сообщения и редачим сообщение.
-                    int editMessageId = Program.GetValueDictonary(in WillEditMessages, chatId);
+                    int editMessageId = valueDictonarys.GetValueDictonary(in WillEditMessages, chatId);
                     await TelegramBot.Bot?.EditMessageTextAsync(chatId, editMessageId, "Выберите свою группу", replyMarkup: keyboard);
                 }
                 catch (Exception)

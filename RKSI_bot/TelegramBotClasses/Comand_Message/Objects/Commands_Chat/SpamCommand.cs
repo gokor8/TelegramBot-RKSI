@@ -1,4 +1,5 @@
-﻿using RKSI_bot.Web;
+﻿using RKSI_bot.Databases.PathDB;
+using RKSI_bot.Web;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace RKSI_bot.Comand_Message.Commands_Objects
             this.chatId = chatId;
             this.message = message;
 
-            DataBase dataBase = new DataBase(message, chatId);
+            DataBase dataBase = new DataBase(message, chatId, new LocalPathDB("Database"));
 
             if (GroupsContainer.IsConsistGroups(message))
             {

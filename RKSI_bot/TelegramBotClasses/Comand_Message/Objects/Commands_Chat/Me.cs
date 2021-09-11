@@ -1,4 +1,5 @@
 ﻿
+using RKSI_bot.Databases.PathDB;
 using RKSI_bot.ReservingObjects;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace RKSI_bot.Comand_Message.Commands_Objects
             long chatId = message.Message.Chat.Id;
             TelegramBot.Bot.SendTextMessageAsync(chatId, "Подождите, 3 секунды, ищу информацию в базе данных...");
 
-            object faculty = new DataBase(message.Message.Text, message.Message.Chat.Id).ExcecuteCommand($"SELECT Facult FROM ttable WHERE id_person = '{chatId}'");
+            object faculty = new DataBase(message.Message.Text, message.Message.Chat.Id, new LocalPathDB("Database")).ExcecuteCommand($"SELECT Facult FROM ttable WHERE id_person = '{chatId}'");
 
             if (faculty != null)
                 TelegramBot.Bot.SendTextMessageAsync(message.Message.Chat.Id, message.Message.Chat.FirstName + " " + message.Message.Chat.LastName + message.Message.Chat.Title + " : " + faculty.ToString());

@@ -16,7 +16,7 @@ namespace RKSI_bot
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            var excelGroups = await new ParsingRKSI().GetRecentsGroups();
+            var excelGroups = new ParsingGroups().GetRecentsGroups();
             new ExcelGroups(@"D:\Users\gzaly\OneDrive\Рабочий стол\Groups.xlsx").SetDataExcel(excelGroups);
 
             new AutoRunWindows().SetToAutoRun();
@@ -26,32 +26,6 @@ namespace RKSI_bot
             await new TelegramBot().StartBot();
 
             Console.ReadLine();
-        }
-
-        public static bool CheckDictonary<T, C>(in Dictionary<T, C> dictonary, T key)
-        {
-            foreach (var value in dictonary)
-            {
-                if (value.Key.Equals(key))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public static C GetValueDictonary<T, C>(in Dictionary<T, C> dictonary, T key)
-        {
-            foreach (var value in dictonary)
-            {
-                if (value.Key.Equals(key))
-                {
-                    return value.Value;
-                }
-            }
-
-            return default;
         }
     }
 }

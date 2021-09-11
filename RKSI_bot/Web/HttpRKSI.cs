@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using RKSI_bot.Web.Parsing;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -22,10 +23,10 @@ namespace RKSI_bot.Web
             SetDefaultHeaders();
         }
 
-        public static async Task SendScheduleMessage(string message, long chatId, bool isAllSchedule = false)
+        public static async Task SendScheduleMessage(string message, long chatId, IParsingRKSI typeShedule, bool isAllSchedule = false)
         {
             string html = await SendRequestToRKSI(message);
-            string textForMessage = new ParsingRKSI().GetSchedule(html, isAllSchedule);
+            string textForMessage = typeShedule.GetSchedule(html, isAllSchedule);
 
             try
             {

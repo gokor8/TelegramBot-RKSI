@@ -1,4 +1,5 @@
-﻿using RKSI_bot.ReservingObjects;
+﻿using RKSI_bot.Databases;
+using RKSI_bot.ReservingObjects;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,7 +16,7 @@ namespace RKSI_bot.Comand_Message.Commands_Objects
         {
             if (message.Message.Chat.Id == 399418047)
             {
-                new DataBase().ScheduleDataBase("id_person");
+                new ScheduleDB(new Databases.PathDB.LocalPathDB("Database")).SendScheduleFromDB("id_person");
             }
         }
     }
