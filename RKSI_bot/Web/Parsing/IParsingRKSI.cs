@@ -10,6 +10,6 @@ namespace RKSI_bot.Web.Parsing
     {
         string GetSchedule(string html, bool IsAllSchedule);
 
-        string[][][] GetRecentsGroups();
+        string[][][] GetRecentDataArray();
     }
 }

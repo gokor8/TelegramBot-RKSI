@@ -24,7 +24,10 @@ namespace RKSI_bot
             await Bot.SetWebhookAsync("https://api.telegram.org/bot1283170424:AAHZTtV0Rehsc_MlEBZKKXJLaU4udCbsYd8/setWebhook?url=https://SSRtttteeessa:8443/1283170424:AAHZTtV0Rehsc_MlEBZKKXJLaU4udCbsYd8/");
 
             Bot.OnMessage += callbackHandler.OnMessage;
-            Bot.OnCallbackQuery += callbackHandler.OnCallbackQuery;
+            Bot.OnCallbackQuery += (sender, message)=>
+                {
+                   new  callbackHandler.OnKeyboard(message,);
+                    };
 
             Bot.StartReceiving();
         }

@@ -18,13 +18,13 @@ namespace RKSI_bot.Groups
             return false;
         }
 
-        public C GetValueDictonary<T, C>(in Dictionary<T, C> dictonary, T key)
+        public Dictionary<T, C> GetDataDictonary<T, C>(in Dictionary<T, C> dictonary, T key)
         {
             foreach (var value in dictonary)
             {
                 if (value.Key.Equals(key))
                 {
-                    return value.Value;
+                    return new Dictionary<T, C>() { { value.Key, value.Value } };
                 }
             }
             return default;

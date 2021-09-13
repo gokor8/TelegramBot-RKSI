@@ -51,62 +51,6 @@ namespace RKSI_bot
             }).Start();
         }
 
-        public void OnCallbackQuery(object sender, CallbackQueryEventArgs callbackInformation)
-        {
-            new Task(async () =>
-            {
-                long chatId = callbackInformation.CallbackQuery.Message.Chat.Id;
-                string message = callbackInformation.CallbackQuery.Data;
-
-                switch (callbackInformation.CallbackQuery.Data)
-                {
-                    case "1 group":
-                        await ButtonsLogic(chatId, 1);
-                        break;
-                    case "2 group":
-                        await ButtonsLogic(chatId, 2);
-                        break;
-                    case "3 group":
-                        await ButtonsLogic(chatId, 3);
-                        break;
-                    case "4 group":
-                        await ButtonsLogic(chatId, 4);
-                        break;
-                    default:
-                        if (GroupsContainer.Groups.FirstOrDefault(group => group == message) != null)
-                        {
-                            await HttpRKSI.SendScheduleMessage(message, chatId, new ParsingGroups() ,true);
-                        }
-                        break;
-                }
-            }).Start();
-        }
-        private async Task ButtonsLogic(long chatId, int Cours)
-        {
-            TelegramMessageKeyboard telegramkeyboard = new TelegramMessageKeyboard();
-            SearchInArrays valueDictonarys = new SearchInArrays();
-
-            var keyboard = telegramkeyboard.GetKeyboard(Cours, 3);
-
-            if (valueDictonarys.GetBoolDictonary(in WillEditMessages, chatId))
-            {
-                try
-                {
-                    //Берем из словаря Ид сообщения и редачим сообщение.
-                    int editMessageId = valueDictonarys.GetValueDictonary(in WillEditMessages, chatId);
-                    await TelegramBot.Bot?.EditMessageTextAsync(chatId, editMessageId, "Выберите свою группу", replyMarkup: keyboard);
-                }
-                catch (Exception)
-                { /*Телеграм дает ошибку если, я редактирую сообщение на точно такое же*/ }
-            }
-            else
-            {
-                //Добавляем в словарь ид чата и ид сообщение, чтобы потом отредачить его
-                var addMessageId = await TelegramBot.Bot.SendTextMessageAsync(chatId, "Выберите свою группу", replyMarkup: keyboard);
-                WillEditMessages.Add(chatId, addMessageId.MessageId);
-            }
-        }
-
         private string RandomSay()
         {
             string[] randoms = new string[1];

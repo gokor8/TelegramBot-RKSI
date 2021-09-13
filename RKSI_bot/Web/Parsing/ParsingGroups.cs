@@ -59,7 +59,7 @@ namespace RKSI_bot.Web
             return firstMessage + message;
         }
 
-        public string[][][] GetRecentsGroups()
+        public string[][][] GetRecentDataArray()
         {
             var htmlRKSI = HttpRKSI.Client.GetStringAsync("/schedule").Result;
             htmlDocument.LoadHtml(htmlRKSI);
