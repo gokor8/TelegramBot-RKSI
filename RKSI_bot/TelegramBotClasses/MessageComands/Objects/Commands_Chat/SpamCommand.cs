@@ -3,6 +3,7 @@ using RKSI_bot.Web;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Telegram.Bot.Args;
 
 namespace RKSI_bot.Comand_Message.Commands_Objects
 {
@@ -10,16 +11,18 @@ namespace RKSI_bot.Comand_Message.Commands_Objects
     {
         //private MessageEventArgs message;
         private List<string> chatTypes;
+        private List<long> spamIds;
 
         private long chatId;
         private string message;
 
-        public SpamCommand()
+        public SpamCommand(List<long> spamIds)
         {
             chatTypes = new List<string> { "group", "supergroup", "private" };
+            this.spamIds = spamIds;
         }
 
-        public async Task SpamRegistration(string message, long chatId)
+        public async Task Subscribe(string message, long chatId)
         {
             this.chatId = chatId;
             this.message = message;
@@ -45,7 +48,7 @@ namespace RKSI_bot.Comand_Message.Commands_Objects
             else
                 await TelegramBot.Bot.SendTextMessageAsync(chatId, "Такой группы нету");
 
-            ReservingObjects.CommandsHandler.SpamIds.Remove(chatId);
+            spamIds.Remove(chatId);
         }
 
         public bool HasChatType(string chatType)

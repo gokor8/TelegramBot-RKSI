@@ -16,7 +16,7 @@ namespace RKSI_bot
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            var excelGroups = new ParsingGroups().GetRecentsGroups();
+            var excelGroups = new ParsingGroups().GetRecentDataArray();
             new ExcelGroups(@"D:\Users\gzaly\OneDrive\Рабочий стол\Groups.xlsx").SetDataExcel(excelGroups);
 
             new AutoRunWindows().SetToAutoRun();

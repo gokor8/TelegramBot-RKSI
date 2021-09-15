@@ -17,15 +17,18 @@ namespace RKSI_bot
         }
         public InlineKeyboardMarkup GetStartGroups()
         {
-            List<InlineKeyboardButton[]> list = new List<InlineKeyboardButton[]>();
+            List<InlineKeyboardButton[]> listArrayButtons = new List<InlineKeyboardButton[]>();
 
-            list.Add(new[] { 
-                    InlineKeyboardButton.WithCallbackData("1 курс", "1 group"),
-                    InlineKeyboardButton.WithCallbackData("2 курс", "2 group"),
-                    InlineKeyboardButton.WithCallbackData("3 курс", "3 group"),
-                    InlineKeyboardButton.WithCallbackData("4 курс", "4 group")
+            List<InlineKeyboardButton> listButtons = new List<InlineKeyboardButton>();
+
+            listArrayButtons.Add(new[] { 
+                    InlineKeyboardButton.WithCallbackData("1 курс", "1"),
+                    InlineKeyboardButton.WithCallbackData("2 курс", "2"),
+                    InlineKeyboardButton.WithCallbackData("3 курс", "3"),
+                    InlineKeyboardButton.WithCallbackData("4 курс", "4")
                     });
-            return new InlineKeyboardMarkup(list);
+
+            return new InlineKeyboardMarkup(listArrayButtons);
         }
 
         private void SetCourses(int cours)

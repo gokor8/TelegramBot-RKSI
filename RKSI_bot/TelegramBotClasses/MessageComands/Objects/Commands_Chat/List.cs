@@ -11,14 +11,9 @@ namespace RKSI_bot.ReservingObjects
         public List<string> ChatPermissions { get; set; }
         public string[] Triggers { get; set; }
 
-        private TelegramMessageKeyboard telegramKeyboard;
-        public List()
-        {
-            telegramKeyboard = new TelegramMessageKeyboard();
-        }
         public void Execute(ref MessageEventArgs message)
         {
-            var keyboard = telegramKeyboard.GetStartGroups();
+            var keyboard = new TelegramMessageKeyboard().GetStartGroups();
             TelegramBot.Bot.SendTextMessageAsync(message.Message.Chat.Id, "-----------\r\n|РКСИ|\r\n-----------", replyMarkup: keyboard);
         }
     }

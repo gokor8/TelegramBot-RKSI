@@ -1,7 +1,7 @@
 ﻿using RKSI_bot.Groups;
-using RKSI_bot.TelegramBotClasses.MessageHandlers;
 using RKSI_bot.Web;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,51 +10,34 @@ using Telegram.Bot.Args;
 
 namespace RKSI_bot.TelegramBotClasses.Keyboards
 {
-    class KeyboardGroup : IKeyboardLogic
+    class KeyboardHandler
     {
         private Dictionary<long, int> editMessages;
 
-        public string[] triggers { get; set; }
-
-        public KeyboardGroup(Dictionary<long, int> editMessages, params string[] triggers)
+        public KeyboardHandler(Dictionary<long, int> editMessages, params string[] triggers)
         {
-            this.triggers = triggers;
             this.editMessages = editMessages;
         }
 
-        public void Invoke(string message, long chatId)
+        public void OnCallbackKeyboard(string message, long chatId)
         {
             new Task(async () =>
             {
-                switch (message)
+                try
                 {
-                    case "1 group":
-                        await ButtonsLogic(chatId, 1);
-                        break;
-                    case "2 group":
-                        await ButtonsLogic(chatId, 2);
-                        break;
-                    case "3 group":
-                        await ButtonsLogic(chatId, 3);
-                        break;
-                    case "4 group":
-                        await ButtonsLogic(chatId, 4);
-                        break;
-                    default:
-                        if (GroupsContainer.Groups.FirstOrDefault(group => group == message) != null)
-                        {
-                            await HttpRKSI.SendScheduleMessage(message, chatId, new ParsingGroups(), true);
-                        }
-                        break;
-                }
+                    int course = Convert.ToInt32(message);
+                    await ButtonsLogic(chatId, course);
+                }catch(Exception)
+                {
+                    await HttpRKSI.SendScheduleMessage(message, chatId, new ParsingGroups(), true);
+                };
             }).Start();
         }
         private async Task ButtonsLogic(long chatId, int Cours)
         {
-            TelegramMessageKeyboard telegramkeyboard = new TelegramMessageKeyboard();
             SearchInArrays valueDictonarys = new SearchInArrays();
 
-            var keyboard = telegramkeyboard.GetKeyboard(Cours, 3);
+            var keyboard = new TelegramMessageKeyboard().GetKeyboard(Cours, 3);
 
             if (valueDictonarys.GetBoolDictonary(in editMessages, chatId))
             {
@@ -73,11 +56,6 @@ namespace RKSI_bot.TelegramBotClasses.Keyboards
                 var addMessageId = await TelegramBot.Bot.SendTextMessageAsync(chatId, "Выберите свою группу", replyMarkup: keyboard);
                 editMessages.Add(chatId, addMessageId.MessageId);
             }
-        }
-
-        public Dictionary<long, int> GetEditedDictonary()
-        {
-            return editMessages;
         }
 
     }

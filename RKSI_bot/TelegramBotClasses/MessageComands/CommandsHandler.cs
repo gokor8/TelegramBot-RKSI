@@ -1,6 +1,8 @@
 ﻿using RKSI_bot.Comand_Message;
 using RKSI_bot.Comand_Message.Commands_Objects;
 using RKSI_bot.Comand_Message.Objects.Commands_Group_Objects;
+using RKSI_bot.Commands.Commands_Objects;
+using RKSI_bot.TelegramBotClasses.MessageComands;
 using RKSI_bot.Web;
 using System;
 using System.Collections.Generic;
@@ -12,17 +14,15 @@ namespace RKSI_bot.ReservingObjects
 {
     internal class CommandsHandler
     {
-        private static List<ICommands> categorysCommands;
-
-        public static List<long> SpamIds = new List<long>();
+        private CommandsContainer handlerContainer;
+        public List<long> SpamIds { get; private set; }
 
         public CommandsHandler()
         {
-            categorysCommands = new List<ICommands>();
+            SpamIds = new List<long>();
+            handlerContainer = new CommandsContainer();
+            SetCommands();
         }
-
-        public void Register(ICommands command)
-            => categorysCommands.Add(command);
 
         public async Task Invoke(MessageEventArgs chatInformation)
         {
@@ -32,7 +32,7 @@ namespace RKSI_bot.ReservingObjects
             /* Ищу в List<Command_link> нужный Command_Link
              * в котором массив triggers имеет значение полученного string trigger */
 
-            var command = categorysCommands.FirstOrDefault(cmd => cmd.HasTrigger(message, chatType))?.ReturnCommand();
+            var command = handlerContainer.categorysCommands.FirstOrDefault(cmd => cmd.HasTrigger(message, chatType))?.ReturnCommand();
 
             if (command != null)
             {
@@ -44,11 +44,10 @@ namespace RKSI_bot.ReservingObjects
             }
             else
             {
-                SpamCommand spamCommand = new SpamCommand();
-
+                SpamCommand spamCommand = new SpamCommand(SpamIds);
                 if (SpamIds.Contains(chatId) && spamCommand.HasChatType(chatType))
                 {
-                    await spamCommand.SpamRegistration(message, chatId);
+                    await spamCommand.Subscribe(message, chatId);
                 }
                 else if (chatType == "private")
                 {
@@ -70,9 +69,21 @@ namespace RKSI_bot.ReservingObjects
             Console.WriteLine($"{message.Message.Chat.Username} | {message.Message.Chat.Id} - {message.Message.Chat.FirstName} : {message.Message.Chat.LastName} : {message.Message.Text} -- {DateTime.Now} | Username - {message.Message.Chat.Username}");
         }
 
-        private void NotFound(string trigger)
+        private void SetCommands()
         {
-            Console.WriteLine($"Команда {trigger} не распознана!");
+            CommandsChat commandForChat = new CommandsChat();
+            CommandsChannel commandForChannel = new CommandsChannel();
+
+            commandForChat.RegisterCommand(new Me(), new List<string> { "group", "supergroup", "private" }, "/me", "🎃");
+            commandForChat.RegisterCommand(new List(), new List<string> { "group", "supergroup", "private" }, "/list", "🕴");
+            commandForChat.RegisterCommand(new Start(), new List<string> { "group", "supergroup", "private" }, "/start", "/help", "🦾");
+            commandForChat.RegisterCommand(new Group(SpamIds), new List<string> { "group", "supergroup", "private" }, "/group", "🏫");
+            commandForChat.RegisterCommand(new AdminComand(), "вайяяя");
+
+            commandForChannel.RegisterCommand(new Message(), new List<string> { "group", "supergroup", "private" }, "пары:");
+
+            handlerContainer.AddToCommands(commandForChat);
+            handlerContainer.AddToCommands(commandForChannel);
         }
     }
 }
