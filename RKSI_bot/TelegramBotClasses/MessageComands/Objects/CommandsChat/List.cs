@@ -13,7 +13,9 @@ namespace RKSI_bot.ReservingObjects
 
         public void Execute(ref MessageEventArgs message)
         {
-            var keyboard = new TelegramMessageKeyboard().GetStartGroups();
+            Dictionary<string, string> courses = new Dictionary<string, string>() { { "1 курс", "1" }, { "2 курс", "2" }, { "3 курс", "3" }, { "4 курс", "4" } };
+            var keyboard = new TelegramMessageKeyboard().GetKeyboard(courses, courses.Count);
+
             TelegramBot.Bot.SendTextMessageAsync(message.Message.Chat.Id, "-----------\r\n|РКСИ|\r\n-----------", replyMarkup: keyboard);
         }
     }

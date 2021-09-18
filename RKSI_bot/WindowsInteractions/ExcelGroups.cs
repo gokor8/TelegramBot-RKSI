@@ -61,8 +61,8 @@ namespace RKSI_bot.Groups
             {
                 for (int sheet = 0; sheet < dataArray.Length; sheet++)
                 {
-                    if (!package.Workbook.Worksheets[sheet].Name.Equals(sheet + 1.ToString()))
-                        package.Workbook.Worksheets.Add(sheet + 1.ToString());
+                    if (!(package.Workbook.Worksheets[sheet].Name == (sheet + 1).ToString()))
+                        package.Workbook.Worksheets.Add((sheet + 1).ToString());
 
                     for (int colum = 0; colum < dataArray[sheet].Length; colum++)
                     {
@@ -86,7 +86,21 @@ namespace RKSI_bot.Groups
             if (!file.Exists)
                 file.Create().Close();
 
+            CreateSheet();
+
             return file;
+        }
+
+        private void CreateSheet()
+        {
+            using (var package = new ExcelPackage(new FileInfo(PathToExcel)))
+            {
+                if(package.Workbook.Worksheets.Count == 0)
+                {
+                    package.Workbook.Worksheets.Add("1");
+                }
+                package.Save();
+            }
         }
         private string[][] GetArrayMaxValue(ExcelRange cells)
         {

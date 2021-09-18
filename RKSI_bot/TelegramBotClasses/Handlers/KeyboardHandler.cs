@@ -12,9 +12,9 @@ namespace RKSI_bot.TelegramBotClasses.Keyboards
 {
     class KeyboardHandler
     {
-        private Dictionary<long, int> editMessages;
+        private ConcurrentDictionary<long, int> editMessages;
 
-        public KeyboardHandler(Dictionary<long, int> editMessages, params string[] triggers)
+        public KeyboardHandler(ConcurrentDictionary<long, int> editMessages, params string[] triggers)
         {
             this.editMessages = editMessages;
         }
@@ -33,28 +33,28 @@ namespace RKSI_bot.TelegramBotClasses.Keyboards
                 };
             }).Start();
         }
-        private async Task ButtonsLogic(long chatId, int Cours)
+
+        private async Task ButtonsLogic(long chatId, int cours)
         {
-            SearchInArrays valueDictonarys = new SearchInArrays();
+            var gorupList = new FormationGroup().GetCoursGroups(cours);
+            var keyboard = new TelegramMessageKeyboard().GetKeyboard(gorupList, 3);
 
-            var keyboard = new TelegramMessageKeyboard().GetKeyboard(Cours, 3);
-
-            if (valueDictonarys.GetBoolDictonary(in editMessages, chatId))
+            if (editMessages.Keys.Contains(chatId))
             {
                 try
-                {
-                    //Берем из словаря Ид сообщения и редачим сообщение.
-                    int editMessageId = valueDictonarys.GetDataDictonary(in editMessages, chatId).First().Value;
+                {   //Берем из словаря Ид сообщения и редачим сообщение.
+                    int editMessageId;
+                    editMessages.TryGetValue(chatId, out editMessageId);
+
                     await TelegramBot.Bot?.EditMessageTextAsync(chatId, editMessageId, "Выберите свою группу", replyMarkup: keyboard);
                 }
                 catch (Exception)
                 { /*Телеграм дает ошибку если, я редактирую сообщение на точно такое же*/ }
             }
             else
-            {
-                //Добавляем в словарь ид чата и ид сообщение, чтобы потом отредачить его
-                var addMessageId = await TelegramBot.Bot.SendTextMessageAsync(chatId, "Выберите свою группу", replyMarkup: keyboard);
-                editMessages.Add(chatId, addMessageId.MessageId);
+            {   //Добавляем в словарь ид чата и ид сообщение, чтобы потом отредачить его
+                var messageInfo = await TelegramBot.Bot.SendTextMessageAsync(chatId, "Выберите свою группу", replyMarkup: keyboard);
+                editMessages.TryAdd(chatId, messageInfo.MessageId);
             }
         }
 

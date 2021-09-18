@@ -1,9 +1,11 @@
 ﻿using RKSI_bot.Databases.PathDB;
 using RKSI_bot.ReservingObjects;
+using RKSI_bot.TelegramBotClasses.Keyboards.UserKeyboard;
 using RKSI_bot.TelegramElements;
 using RKSI_bot.Web;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.ReplyMarkups;
@@ -16,12 +18,10 @@ namespace RKSI_bot.Comand_Message.Objects.Commands_Group_Objects
         public string[] Triggers { get; set; }
 
         private DataBase userGroup;
-        private TelegramUserKeyboard userKeyboard;
 
-        public Message()
+        public Message(IPathDB pathDB)
         {
-            userGroup = new DataBase(new LocalPathDB("DatabaseOftenGroup"));
-            userKeyboard = new TelegramUserKeyboard();
+            userGroup = new DataBase(pathDB);
         }
 
         public void Execute(ref MessageEventArgs chatInformation)
@@ -30,7 +30,7 @@ namespace RKSI_bot.Comand_Message.Objects.Commands_Group_Objects
             string messageUnEscaped = message.Replace("пары:", "").ToUpper();
             long chatId = chatInformation.Message.Chat.Id;
 
-            if (GroupsContainer.IsConsistGroups(messageUnEscaped))
+            if (GroupsContainer.Groups.FirstOrDefault(t => t.ToUpper().Trim().Equals(messageUnEscaped)) != null)
             {
                 RefreshKeyboard(message, chatId);
                 HttpRKSI.SendScheduleMessage(messageUnEscaped, chatId, new ParsingGroups());
@@ -43,6 +43,8 @@ namespace RKSI_bot.Comand_Message.Objects.Commands_Group_Objects
 
         private void RefreshKeyboard(string message, long chatId)
         {
+            TelegramUserKeyboard userKeyboard = new TelegramUserKeyboard(new DefaultButtons());
+
             object group = userGroup.ExcecuteCommand($"SELECT UserGroup FROM ButtonTable WHERE UserChatID = '{chatId}'");
 
             if (group is null)
@@ -65,7 +67,6 @@ namespace RKSI_bot.Comand_Message.Objects.Commands_Group_Objects
                     TelegramBot.Bot.SendTextMessageAsync(chatId, "Группа обновлена на клавиатуре", replyMarkup: markupKeyboard);
                 }
             }
-
         }
     }
 }

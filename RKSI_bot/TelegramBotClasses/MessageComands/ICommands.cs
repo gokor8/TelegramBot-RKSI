@@ -1,8 +1,5 @@
 ﻿using RKSI_bot.ReservingObjects;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using Telegram.Bot.Args;
 
 namespace RKSI_bot.Comand_Message
 {

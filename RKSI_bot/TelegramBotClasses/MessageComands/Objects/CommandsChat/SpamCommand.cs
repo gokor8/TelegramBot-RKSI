@@ -2,6 +2,7 @@
 using RKSI_bot.Web;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot.Args;
 
@@ -29,7 +30,7 @@ namespace RKSI_bot.Comand_Message.Commands_Objects
 
             DataBase dataBase = new DataBase(message, chatId, new LocalPathDB("Database"));
 
-            if (GroupsContainer.IsConsistGroups(message))
+            if (GroupsContainer.Groups.FirstOrDefault(t => t.ToUpper().Trim().Equals(message)) != null)
             {
                 // N для киррилицы ''для значений
                 if (dataBase.GetBool(dataBase.ExcecuteCommand($"SELECT 1 FROM ttable WHERE id_person={chatId}")))

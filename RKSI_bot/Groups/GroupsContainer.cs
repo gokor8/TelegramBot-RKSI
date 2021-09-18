@@ -1,6 +1,4 @@
 ﻿using RKSI_bot.Groups;
-using System;
-using System.Linq;
 
 namespace RKSI_bot
 {
@@ -8,22 +6,11 @@ namespace RKSI_bot
     {
         public static string[] Groups;
 
+        // Можно было бы избавиться от статики, и реализовать бд, вместо Excel, и каждый раз запрашивать.
+        // Но пока оставлю excel для демонстрации работы с ним, а далее будет переход на ДБ.
         static GroupsContainer()
         {
             Groups = new ExcelGroups(@"D:\Users\gzaly\OneDrive\Рабочий стол\Groups.xlsx").GetDataExcel(false)[0][0];
-        }
-
-        public static bool IsConsistGroups(string message)
-        {
-            foreach (var group in Groups)
-            {
-                if (message.ToUpper().Trim().Equals(group))
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
     }
 }

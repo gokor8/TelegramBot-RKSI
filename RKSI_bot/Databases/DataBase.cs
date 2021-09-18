@@ -33,6 +33,7 @@ namespace RKSI_bot
             this.textMessage = textMessage;
             this.chatId = chatId;
         }
+
         public object ExcecuteCommand(string command)
         {
             using (SqlConnection connection = CheckConnection())

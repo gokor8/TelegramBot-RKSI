@@ -2,7 +2,9 @@
 using RKSI_bot.Comand_Message.Commands_Objects;
 using RKSI_bot.Comand_Message.Objects.Commands_Group_Objects;
 using RKSI_bot.Commands.Commands_Objects;
+using RKSI_bot.Databases.PathDB;
 using RKSI_bot.TelegramBotClasses.MessageComands;
+using RKSI_bot.TelegramElements;
 using RKSI_bot.Web;
 using System;
 using System.Collections.Generic;
@@ -15,13 +17,13 @@ namespace RKSI_bot.ReservingObjects
     internal class CommandsHandler
     {
         private CommandsContainer handlerContainer;
-        public List<long> SpamIds { get; private set; }
+        private List<long> SpamIds;
+        private TelegramUserKeyboard userKeyboard;
 
         public CommandsHandler()
         {
             SpamIds = new List<long>();
-            handlerContainer = new CommandsContainer();
-            SetCommands();
+            setCommands();
         }
 
         public async Task Invoke(MessageEventArgs chatInformation)
@@ -36,7 +38,8 @@ namespace RKSI_bot.ReservingObjects
 
             if (command != null)
             {
-                LogAndDeleteUser(in chatInformation);
+                if ((SpamIds?.Count ?? 0) != 0)
+                    SpamIds.Remove(chatId);
                 // Если триггер найден в каком - либо ICommands
                 // выполняем метод в классе, который унаследован от интерфейса
                 // var userCommand = command.ReturnCommand();
@@ -51,26 +54,14 @@ namespace RKSI_bot.ReservingObjects
                 }
                 else if (chatType == "private")
                 {
-                    new Message().Execute(ref chatInformation);
+                    new Message(new LocalPathDB("DatabaseOftenGroup")).Execute(ref chatInformation);
                 }
             }
         }
 
-        private void LogAndDeleteUser(in MessageEventArgs message)
+        private void setCommands()
         {
-            long chatId = message.Message.Chat.Id;
-
-            if ((SpamIds?.Count ?? 0) != 0)
-            {
-                long userId = SpamIds.FirstOrDefault(usr => usr == chatId);
-                SpamIds.Remove(userId);
-            }
-
-            Console.WriteLine($"{message.Message.Chat.Username} | {message.Message.Chat.Id} - {message.Message.Chat.FirstName} : {message.Message.Chat.LastName} : {message.Message.Text} -- {DateTime.Now} | Username - {message.Message.Chat.Username}");
-        }
-
-        private void SetCommands()
-        {
+            handlerContainer = new CommandsContainer();
             CommandsChat commandForChat = new CommandsChat();
             CommandsChannel commandForChannel = new CommandsChannel();
 
@@ -80,7 +71,7 @@ namespace RKSI_bot.ReservingObjects
             commandForChat.RegisterCommand(new Group(SpamIds), new List<string> { "group", "supergroup", "private" }, "/group", "🏫");
             commandForChat.RegisterCommand(new AdminComand(), "вайяяя");
 
-            commandForChannel.RegisterCommand(new Message(), new List<string> { "group", "supergroup", "private" }, "пары:");
+            commandForChannel.RegisterCommand(new Message(new LocalPathDB("DatabaseOftenGroup")), new List<string> { "group", "supergroup", "private" }, "пары:");
 
             handlerContainer.AddToCommands(commandForChat);
             handlerContainer.AddToCommands(commandForChannel);

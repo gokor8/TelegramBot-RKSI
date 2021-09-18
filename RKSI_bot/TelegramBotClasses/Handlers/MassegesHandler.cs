@@ -1,15 +1,5 @@
-﻿using RKSI_bot.Comand_Message;
-using RKSI_bot.Comand_Message.Commands_Objects;
-using RKSI_bot.Comand_Message.Objects.Commands_Group_Objects;
-using RKSI_bot.Commands.Commands_Objects;
-using RKSI_bot.Groups;
-using RKSI_bot.ReservingObjects;
-using RKSI_bot.TelegramElements;
-using RKSI_bot.Web;
+﻿using RKSI_bot.ReservingObjects;
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.Enums;

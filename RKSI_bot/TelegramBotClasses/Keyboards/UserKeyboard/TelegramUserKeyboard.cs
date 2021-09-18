@@ -1,14 +1,17 @@
-﻿using System;
+﻿using RKSI_bot.TelegramBotClasses.Keyboards.UserKeyboard.Buttons;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace RKSI_bot.TelegramElements
 {
     class TelegramUserKeyboard
     {
-        private static List<string> buttons = new List<string>();
+        public TelegramUserKeyboard(IButtons userKeyboardButtons)
+        {
+            buttons = userKeyboardButtons.GetList();
+        }
+
+        private List<string> buttons;
 
         public void AddButton(string text)
             => buttons.Add(text);

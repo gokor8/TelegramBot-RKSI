@@ -1,12 +1,7 @@
-﻿//Gokor8
-using HtmlAgilityPack;
-using RKSI_bot.Groups;
+﻿using HtmlAgilityPack;
 using RKSI_bot.Web.Parsing;
 using RKSI_bot.Web.Parsing.BuildingMessage;
 using System;
-using System.Threading.Tasks;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
 
 namespace RKSI_bot.Web
 {
@@ -44,7 +39,7 @@ namespace RKSI_bot.Web
                 if (node.Name.ToLower() == "hr")
                 {
                     if (IsAllSchedule)
-                       message += "----------------\r\n";
+                       message += "--------------------------\r\n";
                     else
                         break;
                 }

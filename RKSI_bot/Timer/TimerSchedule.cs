@@ -20,7 +20,7 @@ namespace RKSI_bot
         {
             Console.WriteLine("### Timer Started ###");
             DateTime nowTime = DateTime.Now;
-            DateTime scheduledTime = new DateTime(nowTime.Year, nowTime.Month, nowTime.Day, 16, 00, 0, 0); //Specify your scheduled time HH,MM,SS [8am and 42 minutes]
+            DateTime scheduledTime = new DateTime(nowTime.Year, nowTime.Month, nowTime.Day, 16, 00, 0, 0); //HH,MM,SS [8am and 42 minutes]
             if (nowTime > scheduledTime)
             {
                 scheduledTime = scheduledTime.AddDays(1);
