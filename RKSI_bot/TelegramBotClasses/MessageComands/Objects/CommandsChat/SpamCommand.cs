@@ -1,4 +1,5 @@
 ﻿using RKSI_bot.Databases.PathDB;
+using RKSI_bot.SchedulesContainer;
 using RKSI_bot.Web;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace RKSI_bot.Comand_Message.Commands_Objects
 
             DataBase dataBase = new DataBase(message, chatId, new LocalPathDB("Database"));
 
-            if (GroupsContainer.Groups.FirstOrDefault(t => t.ToUpper().Trim().Equals(message)) != null)
+            if (Groups.GroupTitles.FirstOrDefault(t => t.ToUpper().Trim().Equals(message)) != null)
             {
                 // N для киррилицы ''для значений
                 if (dataBase.GetBool(dataBase.ExcecuteCommand($"SELECT 1 FROM ttable WHERE id_person={chatId}")))

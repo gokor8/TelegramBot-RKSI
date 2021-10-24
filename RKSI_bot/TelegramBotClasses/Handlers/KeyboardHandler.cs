@@ -1,5 +1,5 @@
-﻿using RKSI_bot.Groups;
-using RKSI_bot.Web;
+﻿using RKSI_bot.Web;
+using RKSI_bot.Web.Https;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ namespace RKSI_bot.TelegramBotClasses.Keyboards
                     await ButtonsLogic(chatId, course);
                 }catch(Exception)
                 {
-                    await HttpRKSI.SendScheduleMessage(message, chatId, new ParsingGroups(), true);
+                    await HttpRKSI.SendScheduleMessage(message, chatId, new ParsingGroups(new GroupsRequset()), true);
                 };
             }).Start();
         }

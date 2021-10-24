@@ -34,6 +34,7 @@ namespace RKSI_bot
 
                 int value;
                 willEditMessages.TryRemove(MessageArgs.Message.Chat.Id, out value);
+
                 messageHandler.OnMessage(MessageArgs);
             };
 

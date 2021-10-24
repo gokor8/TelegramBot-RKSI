@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RKSI_bot.SchedulesContainer;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -8,18 +9,18 @@ namespace RKSI_bot.TelegramBotClasses.Keyboards
     {
         public List<string> GetCoursGroups(int cours)
         {
-            List<string> Groups = new List<string>();
-            foreach (var group in GroupsContainer.Groups)
+            List<string> groups = new List<string>();
+            foreach (var group in Groups.GroupTitles)
             {
                 string cleanCours = Regex.Replace(group, @"[^0-9]", "");
 
                 if (Convert.ToInt32(cleanCours[0].ToString()) == cours)
                 {
-                    Groups.Add(group);
+                    groups.Add(group);
                 }
             }
 
-            return Groups;
+            return groups;
         }
     }
 }

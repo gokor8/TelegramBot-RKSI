@@ -4,6 +4,7 @@ using RKSI_bot.Comand_Message.Objects.Commands_Group_Objects;
 using RKSI_bot.Commands.Commands_Objects;
 using RKSI_bot.Databases.PathDB;
 using RKSI_bot.TelegramBotClasses.MessageComands;
+using RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.NudeMessage;
 using RKSI_bot.TelegramElements;
 using RKSI_bot.Web;
 using System;
@@ -54,7 +55,7 @@ namespace RKSI_bot.ReservingObjects
                 }
                 else if (chatType == "private")
                 {
-                    new Message(new LocalPathDB("DatabaseOftenGroup")).Execute(ref chatInformation);
+                    new Message().Execute(ref chatInformation);
                 }
             }
         }
@@ -71,7 +72,7 @@ namespace RKSI_bot.ReservingObjects
             commandForChat.RegisterCommand(new Group(SpamIds), new List<string> { "group", "supergroup", "private" }, "/group", "🏫");
             commandForChat.RegisterCommand(new AdminComand(), "вайяяя");
 
-            commandForChannel.RegisterCommand(new Message(new LocalPathDB("DatabaseOftenGroup")), new List<string> { "group", "supergroup", "private" }, "пары:");
+            commandForChannel.RegisterCommand(new Message(), new List<string> { "group", "supergroup", "private" }, "пары:", "-");
 
             handlerContainer.AddToCommands(commandForChat);
             handlerContainer.AddToCommands(commandForChannel);
