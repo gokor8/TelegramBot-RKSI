@@ -1,4 +1,5 @@
-﻿using RKSI_bot.Web.Parsing;
+﻿using RKSI_bot.Web.Https;
+using RKSI_bot.Web.Parsing;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -23,33 +24,19 @@ namespace RKSI_bot.Web
             SetDefaultHeaders();
         }
 
-        public static async Task SendScheduleMessage(string message, long chatId, IParsingRKSI typeShedule, bool isAllSchedule = false)
+        public static async Task SendScheduleMessage(string message, long chatId, IParsingRKSI typeSheduleSize, bool isAllSchedule = false)
         {
-            string html = await SendRequestToRKSI(message);
-            string textForMessage = typeShedule.GetSchedule(html, isAllSchedule);
+            string textForMessage = typeSheduleSize.SetHtml(message).GetSchedule(isAllSchedule);
 
             try
             {
                 await TelegramBot.Bot.SendTextMessageAsync(chatId, textForMessage, Telegram.Bot.Types.Enums.ParseMode.Html);
-            }catch(System.Exception exc)
+            }
+            catch (System.Exception exc)
             {
                 System.Console.WriteLine(exc);
             }
             // Создаю класс, или в классе Parsing завожу нужные переменные, например: chatId, message, и в логику даю из класса эти значения
-        }
-
-        private static async Task<string> SendRequestToRKSI(string currentEncoding)
-        {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
-            var endEncoding = Encoding.GetEncoding("windows-1251");
-            string groupEncoded = HttpUtility.UrlEncode(currentEncoding, endEncoding);
-            byte[] bytes = endEncoding.GetBytes($"group={groupEncoded}&stt=qq");
-            var byteArrayContent = new ByteArrayContent(bytes);
-            byteArrayContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
-
-            var taskResponse = await Client.PostAsync("https://www.rksi.ru/schedule", byteArrayContent);
-            return await taskResponse.Content.ReadAsStringAsync();
         }
 
         public static void SetDefaultHeaders()
