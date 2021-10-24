@@ -1,20 +1,33 @@
 ﻿using HtmlAgilityPack;
+using RKSI_bot.Web.Https;
 using RKSI_bot.Web.Parsing;
 using RKSI_bot.Web.Parsing.BuildingMessage;
 using System;
+using System.Threading.Tasks;
 
 namespace RKSI_bot.Web
 {
-    class ParsingGroups : AbstractBuildMessage , IParsingRKSI
+    public class ParsingGroups : AbstractBuildMessage , IParsingRKSI
     {
+        private IScheduleType scheduleType;
         private HtmlDocument htmlDocument;
+        private string html;
 
-        public ParsingGroups()
+
+        public ParsingGroups(IScheduleType scheduleType)
         {
+            this.scheduleType = scheduleType;
             htmlDocument = new HtmlDocument();
         }
 
-        public string GetSchedule(string html, bool IsAllSchedule)
+        public IParsingRKSI SetHtml(string message)
+        {
+            html = scheduleType.SendRKSI(message).Result;
+
+            return this;
+        }
+
+        public string GetSchedule(bool IsAllSchedule)
         {
             int day = 0;
 

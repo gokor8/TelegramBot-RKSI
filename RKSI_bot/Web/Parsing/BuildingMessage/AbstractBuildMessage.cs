@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RKSI_bot.Web.Parsing.BuildingMessage
 {
-    abstract class AbstractBuildMessage
+    public abstract class AbstractBuildMessage
     {
         public virtual string TranslateDayOfWeek(DayOfWeek day)
         {
