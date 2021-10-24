@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace RKSI_bot.Groups
+namespace RKSI_bot.WindowsInteractions
 {
     internal class ExcelGroups
     {
