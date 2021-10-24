@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RKSI_bot.Databases.PathDB
 {
-    interface IPathDB
+    public interface IPathDB
     {
         public string PathDB { get; set; }
     }

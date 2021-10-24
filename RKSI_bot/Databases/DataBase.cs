@@ -12,7 +12,7 @@ using Telegram.Bot.Args;
 
 namespace RKSI_bot
 {
-    class DataBase
+    public class DataBase
     {
         private IPathDB pathToDB;
 
@@ -49,7 +49,7 @@ namespace RKSI_bot
                 if (typesSqlCommand.FirstOrDefault(cmd => command.Contains(cmd.ToUpper())) is null)
                     objChanges = CommandInvoker?.ExecuteScalar();
                 else
-                    objChanges = CommandInvoker.ExecuteNonQuery();
+                    objChanges = CommandInvoker?.ExecuteNonQuery();
 
                 return objChanges;
             }
@@ -74,10 +74,9 @@ namespace RKSI_bot
                 {
                     Connection.Open();
                 }
-                catch (SqlException)
+                catch (SqlException exc)
                 {
-                    TelegramBot.Bot.SendTextMessageAsync(chatId, "Произошла ошибка с подключением к Базе данных, повторите попытку позднее");
-                    return null;
+                    TelegramBot.Bot.SendTextMessageAsync(chatId, "Произошла ошибка с подключением к Базе данных, повторите попытку позднее " + exc.Message);
                 }
 
             return Connection;

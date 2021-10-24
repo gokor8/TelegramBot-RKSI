@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RKSI_bot.Databases.PathDB
 {
-    class LocalPathDB : IPathDB
+    public class LocalPathDB : IPathDB
     {
         public string PathDB { get; set; } = System.IO.Path.GetFullPath(@"..\..\..\") + $@"Databases\";
 
