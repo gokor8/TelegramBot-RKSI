@@ -8,7 +8,7 @@ using Xunit;
 
 namespace RksiBot_Tests
 {
-    public class TitelsContainers_Test
+    public class TitelsContainersTest
     {
         [Fact]
         public void CheckGroupTrigger_Test()
