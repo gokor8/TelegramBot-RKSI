@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace RKSI_bot.WindowsInteractions
 {
-    internal class ExcelGroups
+    public class ExcelGroups
     {
         public string PathToExcel;
 
@@ -61,10 +61,10 @@ namespace RKSI_bot.WindowsInteractions
             {
                 for (int sheet = 0; sheet < dataArray.Length; sheet++)
                 {
-                    if (!(package.Workbook.Worksheets[sheet].Name == (sheet + 1).ToString()))
+                    if (package.Workbook.Worksheets.Count != sheet + 1)
                         package.Workbook.Worksheets.Add((sheet + 1).ToString());
 
-                    for (int colum = 0; colum < dataArray[sheet].Length; colum++)
+                    for (int colum = dataArray[sheet].Length - 1; colum < dataArray[sheet].Length; colum++)
                     {
                         for (int row = 0; row < dataArray[sheet][colum].Length; row++)
                         {
