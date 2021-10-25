@@ -7,7 +7,7 @@ using RKSI_bot.Web.Parsing.BuildingMessage;
 
 namespace RKSI_bot.Web.Parsing
 {
-    class ParsingTeachers : AbstractBuildMessage, IParsingRKSI
+    public class ParsingTeachers : AbstractBuildMessage, IParsingRKSI
     {
         private IScheduleType scheduleType;
         private HtmlDocument htmlDocument;
@@ -36,11 +36,11 @@ namespace RKSI_bot.Web.Parsing
 
             string[][][] excelGroups = new string[1][][];
             excelGroups[0] = new string[2][];
-            excelGroups[0][0] = new string[Groups.Count];
+            excelGroups[0][1] = new string[Groups.Count];
 
             for (int group = 0; group < Groups.Count; group++)
             {
-                excelGroups[0][0][group] = Groups[group].InnerText;
+                excelGroups[0][1][group] = Groups[group].InnerText;
             }
 
             return excelGroups;
