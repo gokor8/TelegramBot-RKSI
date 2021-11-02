@@ -30,7 +30,7 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
             if (Groups.GroupTitles.FirstOrDefault(t => t.ToUpper().Trim().Equals(messageUnEscaped)) != null)
             {
                 RefreshKeyboard(message, chatId);
-                HttpRKSI.SendScheduleMessage(messageUnEscaped, chatId,new ParsingGroups(new GroupsRequset())).Wait();
+                HttpRKSI.SendScheduleMessage(messageUnEscaped, chatId, new GroupsFactory()).Wait();
             }
             else
             {

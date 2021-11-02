@@ -6,7 +6,7 @@ using Xunit;
 
 namespace RksiBot_Tests
 {
-    public class MessageTeacherTest
+    public class MessageTeacher_Test
     {
         [Fact]
         public void TeacherRequest_Test()

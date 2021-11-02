@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace RKSI_bot.Web.Parsing
 {
-    public interface IParsingRKSI
+    public interface IParser
     {
-        IParsingRKSI SetHtml(string message);
-        string GetSchedule(bool IsAllSchedule);
+        string GetSchedule(string html, bool IsAllSchedule);
 
-        string[][][] GetRecentDataArray();
+        string[][][] GetParsedList(string html);
     }
 }

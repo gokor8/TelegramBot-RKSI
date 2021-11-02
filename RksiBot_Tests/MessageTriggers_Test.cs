@@ -8,10 +8,10 @@ using Xunit;
 
 namespace RksiBot_Tests
 {
-    public class TitelsContainersTest
+    public class MessageTriggers_Test
     {
         [Fact]
-        public void CheckGroupTrigger_Test()
+        public void CheckGroupTrigger_ReturnBoolTrigger()
         {
             string message = "покс-34b";
             var localDBPath = new LocalPathDB("Database");
@@ -23,7 +23,7 @@ namespace RksiBot_Tests
         }
 
         [Fact]
-        public void CheckTeacherTrigger_Test()
+        public void CheckTeacherTrigger_ReturnBoolTrigger()
         {
             string message = "Арутюнян";
 

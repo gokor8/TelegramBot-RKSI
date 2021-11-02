@@ -7,27 +7,16 @@ using System.Threading.Tasks;
 
 namespace RKSI_bot.Web
 {
-    public class ParsingGroups : AbstractBuildMessage , IParsingRKSI
+    public class ParserGroups : AbstractBuildMessage , IParser
     {
-        private IScheduleType scheduleType;
         private HtmlDocument htmlDocument;
-        private string html;
 
-
-        public ParsingGroups(IScheduleType scheduleType)
+        public ParserGroups()
         {
-            this.scheduleType = scheduleType;
             htmlDocument = new HtmlDocument();
         }
 
-        public IParsingRKSI SetHtml(string message)
-        {
-            html = scheduleType.SendRKSI(message).Result;
-
-            return this;
-        }
-
-        public string GetSchedule(bool IsAllSchedule)
+        public string GetSchedule(string html, bool IsAllSchedule)
         {
             int day = 0;
 
@@ -67,10 +56,9 @@ namespace RKSI_bot.Web
             return firstMessage + message;
         }
 
-        public string[][][] GetRecentDataArray()
+        public string[][][] GetParsedList(string html)
         {
-            var htmlRKSI = HttpRKSI.Client.GetStringAsync("/schedule").Result;
-            htmlDocument.LoadHtml(htmlRKSI);
+            htmlDocument.LoadHtml(html);
 
             var Groups = htmlDocument.DocumentNode.SelectSingleNode("//select[@name='group']").SelectNodes(".//option");
 

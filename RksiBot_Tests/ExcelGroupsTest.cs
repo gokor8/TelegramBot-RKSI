@@ -17,17 +17,22 @@ namespace RksiBot_Tests
             SetGroupData();
             SetTeacherData();
         }
+
         [Fact]
         public void SetTeacherData()
         {
-            var excelTeachers = new ParsingTeachers(new TeachersRequest()).GetRecentDataArray();
+            var excelTeachers = HttpRKSI.GetRecentDataArray(new ParserTeachers());
+
+            Assert.NotNull(excelTeachers);
             new ExcelGroups(@"D:\Users\gzaly\OneDrive\Рабочий стол\Groups.xlsx").SetDataExcel(excelTeachers);
         }
 
         [Fact]
         public void SetGroupData()
         {
-            var excelGroups = new ParsingGroups(new GroupsRequset()).GetRecentDataArray();
+            var excelGroups = HttpRKSI.GetRecentDataArray(new ParserGroups());
+
+            Assert.NotNull(excelGroups);
             new ExcelGroups(@"D:\Users\gzaly\OneDrive\Рабочий стол\Groups.xlsx").SetDataExcel(excelGroups);
         }
     }

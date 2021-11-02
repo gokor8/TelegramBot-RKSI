@@ -38,7 +38,7 @@ namespace RKSI_bot
             Console.WriteLine("### Timer Stopped ### \n");
             Timer.Stop();
 
-            var excelGroups = new ParsingGroups(new GroupsRequset()).GetRecentDataArray();
+            var excelGroups = HttpRKSI.GetRecentDataArray(new ParserGroups());
             new ExcelGroups(@"D:\Users\gzaly\OneDrive\Рабочий стол\Groups.xlsx").SetDataExcel(excelGroups);
 
             _ = new ScheduleDB(new LocalPathDB("Database")).SendScheduleFromDB("id_person");

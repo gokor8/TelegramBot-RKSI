@@ -6,10 +6,10 @@ using Xunit;
 
 namespace RksiBot_Tests
 {
-    public class MessageGroupTest
+    public class Teachers_Test
     {
         [Fact]
-        public void Teachers_Test()
+        public void TeachersTitle_Get_ReturnedArray()
         {
             Assert.NotNull(Teachers.TeacherTitels);
         }

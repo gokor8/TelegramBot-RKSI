@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RKSI_bot.Web.Https
 {
-    public interface IScheduleType
+    public interface IScheduleRequests
     {
         Task<string> SendRKSI(string currentEncoding);
     }

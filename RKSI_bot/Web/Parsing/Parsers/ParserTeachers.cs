@@ -7,30 +7,18 @@ using RKSI_bot.Web.Parsing.BuildingMessage;
 
 namespace RKSI_bot.Web.Parsing
 {
-    public class ParsingTeachers : AbstractBuildMessage, IParsingRKSI
+    public class ParserTeachers : AbstractBuildMessage, IParser
     {
-        private IScheduleType scheduleType;
         private HtmlDocument htmlDocument;
-        private string html;
 
-
-        public ParsingTeachers(IScheduleType scheduleType)
-        {
-            this.scheduleType = scheduleType;
+        public ParserTeachers()
+        { 
             htmlDocument = new HtmlDocument();
         }
 
-        public IParsingRKSI SetHtml(string message)
+        public string[][][] GetParsedList(string html)
         {
-            html = scheduleType.SendRKSI(message).Result;
-
-            return this;
-        }
-
-        public string[][][] GetRecentDataArray()
-        {
-            var htmlRKSI = HttpRKSI.Client.GetStringAsync("/schedule").Result;
-            htmlDocument.LoadHtml(htmlRKSI);
+            htmlDocument.LoadHtml(html);
 
             var Groups = htmlDocument.DocumentNode.SelectSingleNode("//select[@name='teacher']").SelectNodes(".//option");
 
@@ -46,7 +34,7 @@ namespace RKSI_bot.Web.Parsing
             return excelGroups;
         }
 
-        public string GetSchedule(bool IsAllSchedule)
+        public string GetSchedule(string html, bool IsAllSchedule)
         {
             int day = 0;
 

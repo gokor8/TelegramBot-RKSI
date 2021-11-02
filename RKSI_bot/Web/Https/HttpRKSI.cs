@@ -9,7 +9,7 @@ using System.Web;
 
 namespace RKSI_bot.Web
 {
-    internal static class HttpRKSI
+    public static class HttpRKSI
     {
         public static HttpClient Client;
         private static HttpClientHandler handler;
@@ -24,10 +24,10 @@ namespace RKSI_bot.Web
             SetDefaultHeaders();
         }
 
-        public static async Task SendScheduleMessage(string message, long chatId, IParsingRKSI typeSheduleSize, bool isAllSchedule = false)
+        public static async Task SendScheduleMessage(string message, long chatId, Schedule typeShedule, bool isAllSchedule = false)
         {
-            string textForMessage = typeSheduleSize.SetHtml(message).GetSchedule(isAllSchedule);
-
+            string textForMessage = await typeShedule.GetParsedText(message, isAllSchedule);
+            
             try
             {
                 await TelegramBot.Bot.SendTextMessageAsync(chatId, textForMessage, Telegram.Bot.Types.Enums.ParseMode.Html);
@@ -37,6 +37,15 @@ namespace RKSI_bot.Web
                 System.Console.WriteLine(exc);
             }
             // Создаю класс, или в классе Parsing завожу нужные переменные, например: chatId, message, и в логику даю из класса эти значения
+        }
+
+        public static string[][][] GetRecentDataArray(IParser parser)
+        {
+            var htmlSchedule = Client.GetStringAsync("/schedule").Result;
+
+            var excelData = parser.GetParsedList(htmlSchedule);
+
+            return excelData;
         }
 
         public static void SetDefaultHeaders()
