@@ -34,15 +34,15 @@ namespace RKSI_bot.Comand_Message.Commands_Objects
             if (Groups.GroupTitles.FirstOrDefault(t => t.ToUpper().Trim().Equals(message)) != null)
             {
                 // N для киррилицы ''для значений
-                if (dataBase.GetBool(dataBase.ExcecuteCommand($"SELECT 1 FROM ttable WHERE id_person={chatId}")))
+                if (dataBase.GetBool(dataBase.ExcecuteCommand($"SELECT 1 FROM UserTable WHERE ChatId={chatId}")))
                 {
-                    bool canUpdate = dataBase.GetBool(dataBase.ExcecuteCommand($"UPDATE ttable SET Facult=N'{message.ToUpper()}' WHERE id_person='{chatId}'"));
+                    bool canUpdate = dataBase.GetBool(dataBase.ExcecuteCommand($"UPDATE UserTable SET Facult=N'{message.ToUpper()}' WHERE ChatId='{chatId}'"));
                     if (canUpdate)
                         await TelegramBot.Bot.SendTextMessageAsync(chatId, "Ваша группа изменена в ежедневном расписании");
                 }
                 else
                 {
-                    bool canAdd = dataBase.GetBool(dataBase.ExcecuteCommand($"INSERT INTO ttable(id_person,Facult) VALUES ('{chatId}',N'{message}')"));
+                    bool canAdd = dataBase.GetBool(dataBase.ExcecuteCommand($"INSERT INTO UserTable(ChatId,Facult) VALUES ('{chatId}',N'{message}')"));
                     if (canAdd)
                         await TelegramBot.Bot.SendTextMessageAsync(chatId, "Вы подписались на рассылку расписания");
                 }

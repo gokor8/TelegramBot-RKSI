@@ -29,7 +29,7 @@ namespace RKSI_bot.TelegramBotClasses.Keyboards
                     await ButtonsLogic(chatId, course);
                 }catch(Exception)
                 {
-                    await HttpRKSI.SendScheduleMessage(message, chatId, new GroupsFactory(), true);
+                    await HttpRKSI.SendScheduleMessage(message, chatId, new GroupsSchedule(), true);
                 };
             }).Start();
         }

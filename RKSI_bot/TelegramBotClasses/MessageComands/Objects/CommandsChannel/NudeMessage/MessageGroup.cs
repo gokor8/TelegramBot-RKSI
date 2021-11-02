@@ -30,7 +30,7 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
             if (Groups.GroupTitles.FirstOrDefault(t => t.ToUpper().Trim().Equals(messageUnEscaped)) != null)
             {
                 RefreshKeyboard(message, chatId);
-                HttpRKSI.SendScheduleMessage(messageUnEscaped, chatId, new GroupsFactory()).Wait();
+                HttpRKSI.SendScheduleMessage(messageUnEscaped, chatId, new GroupsSchedule()).Wait();
             }
             else
             {
@@ -42,11 +42,11 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
         {
             TelegramUserKeyboard userKeyboard = new TelegramUserKeyboard(new DefaultButtons());
 
-            object group = userGroup.ExcecuteCommand($"SELECT UserGroup FROM ButtonTable WHERE UserChatID = '{chatId}'");
+            object group = userGroup.ExcecuteCommand($"SELECT Facult FROM ButtonFaultTable WHERE ChatId = '{chatId}'");
 
             if (group is null)
             {
-                if (userGroup.GetBool(userGroup.ExcecuteCommand($"INSERT INTO ButtonTable(UserGroup,UserChatID) VALUES (N'{message}','{chatId}')")))
+                if (userGroup.GetBool(userGroup.ExcecuteCommand($"INSERT INTO ButtonTable(Facult,ChatId) VALUES (N'{message}','{chatId}')")))
                 {
                     userKeyboard.AddButton(message);
                     var markupKeyboard = userKeyboard.GetKeyboard();
@@ -56,7 +56,7 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
             }
             else if (!group.ToString().Contains(message))
             {
-                if (userGroup.GetBool(userGroup.ExcecuteCommand($"UPDATE ButtonTable SET UserGroup = N'{message}' WHERE UserChatId = '{chatId}'")))
+                if (userGroup.GetBool(userGroup.ExcecuteCommand($"UPDATE ButtonFaultTable SET Facult = N'{message}' WHERE ChatId = '{chatId}'")))
                 {
                     userKeyboard.ReplaceButton(group.ToString(), message);
                     var markupKeyboard = userKeyboard.GetKeyboard();

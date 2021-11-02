@@ -8,7 +8,7 @@ namespace RksiBot_Tests
     public class DataBaseTest
     {
         [Fact]
-        public void Test_Connect_To_KeyboardDB()
+        public void Connect_ToKeyboardDB_ReturnNotNullExcecute()
         {
             var localDBPath = new LocalPathDB("Database");
 
@@ -16,12 +16,12 @@ namespace RksiBot_Tests
             long chatId = 12;
 
             var userGroup = new DataBase(localDBPath);
-            object aboba = userGroup.ExcecuteCommand($"SELECT UserGroup FROM ButtonTable WHERE UserChatID = '{chatId}'");
+            object aboba = userGroup.ExcecuteCommand($"SELECT Facult FROM ButtonFacultTable WHERE ChatId = '{chatId}'");
             Assert.NotNull(aboba);
         }
 
         [Fact]
-        public void Test_Connect()
+        public void TestConnection_ReturnNoException()
         {
             DataBase dataBase = new DataBase("Amogus", 12, new LocalPathDB("Database"));
 

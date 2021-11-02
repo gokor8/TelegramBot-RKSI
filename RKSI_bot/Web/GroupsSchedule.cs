@@ -6,7 +6,7 @@ using System.Text;
 
 namespace RKSI_bot.Web
 {
-    class GroupsFactory : Schedule
+    class GroupsSchedule : Schedule
     {
         public override IParser GetParser()
         {

@@ -16,7 +16,7 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
 
         public void Invoke(string message, long chatId)
         {
-            HttpRKSI.SendScheduleMessage(message, chatId, new TeachersFactory()).Wait();
+            HttpRKSI.SendScheduleMessage(message, chatId, new TeachersSchedule()).Wait();
         }
     }
 }
