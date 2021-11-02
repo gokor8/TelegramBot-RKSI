@@ -7,6 +7,6 @@ namespace RKSI_bot.SchedulesContainer
 {
     public sealed class Teachers
     {
-        public static readonly string[] TeacherTitels = new ExcelGroups(@"D:\Users\gzaly\OneDrive\Рабочий стол\Groups.xlsx").GetDataExcel(false)[1][0];
+        public static readonly string[] TeacherTitels = new ExcelGroups(@"C:\Users\Григорий\Desktop\Groups.xlsx").GetDataExcel(false)[1][0];
     }
 }

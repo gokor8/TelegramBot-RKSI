@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using HtmlAgilityPack;
 using RKSI_bot.Web.Https;
 using RKSI_bot.Web.Parsing;
@@ -43,8 +44,14 @@ namespace RKSI_bot.Web.Parsing
             DateTime date = DateTime.Today.AddDays(day).Date;
             var h3Node = htmlDocument.DocumentNode.SelectSingleNode($"//h3[contains(text(),'{"."}')]");
 
+            if (h3Node is null)
+                return "Нету расписания";
+
             string[] nodes = new string[2] { "<b>", "</b>" };
             string message = "";
+
+            //if (h3Node.SelectNodes(".//following-sibling::*")?.FirstOrDefault() is null)
+             //   return "Нету расписания";
 
             foreach (var node in h3Node.SelectNodes(".//following-sibling::*"))
             {

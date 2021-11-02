@@ -27,8 +27,4 @@
     <ProjectReference Include="..\RKSI_bot\RKSI_bot.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Schedule_Tests\" />
-  </ItemGroup>
-
 </Project>

@@ -25,10 +25,7 @@ namespace RksiBot_Tests
         {
             DataBase dataBase = new DataBase("Amogus", 12, new LocalPathDB("Database"));
 
-            if (dataBase != null)
-            {
-                Console.WriteLine(dataBase);
-            }
+            Assert.NotNull(dataBase);
         }
     }
 }

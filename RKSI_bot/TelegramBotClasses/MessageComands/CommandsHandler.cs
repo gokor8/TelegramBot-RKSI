@@ -72,7 +72,7 @@ namespace RKSI_bot.ReservingObjects
             commandForChat.RegisterCommand(new Group(SpamIds), new List<string> { "group", "supergroup", "private" }, "/group", "🏫");
             commandForChat.RegisterCommand(new AdminComand(), "вайяяя");
 
-            commandForChannel.RegisterCommand(new Message(), new List<string> { "group", "supergroup", "private" }, "пары:", "-");
+            //commandForChannel.RegisterCommand(new Message(), new List<string> { "group", "supergroup", "private" }, "пары:", "-", ".");
 
             handlerContainer.AddToCommands(commandForChat);
             handlerContainer.AddToCommands(commandForChannel);

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace RKSI_bot.Web
 {
-    class TeachersSchedule : Schedule
+    public class TeachersSchedule : Schedule
     {
         public override IParser GetParser()
         {

@@ -28,7 +28,7 @@ namespace RKSI_bot.Commands.Commands_Objects
         {
             TelegramUserKeyboard userKeyboard = new TelegramUserKeyboard(new DefaultButtons());
 
-            var userGroup = new DataBase(new LocalPathDB("Database")).ExcecuteCommand($"SELECT Facult FROM ButtonTable WHERE ChatId = '{chatId}'");
+            var userGroup = new DataBase(new LocalPathDB("Database")).ExcecuteCommand($"SELECT Facult FROM ButtonFacultTable WHERE ChatId = '{chatId}'");
 
             if (userGroup != null)
             {

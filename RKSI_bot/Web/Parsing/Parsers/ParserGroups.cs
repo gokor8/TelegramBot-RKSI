@@ -3,6 +3,7 @@ using RKSI_bot.Web.Https;
 using RKSI_bot.Web.Parsing;
 using RKSI_bot.Web.Parsing.BuildingMessage;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace RKSI_bot.Web

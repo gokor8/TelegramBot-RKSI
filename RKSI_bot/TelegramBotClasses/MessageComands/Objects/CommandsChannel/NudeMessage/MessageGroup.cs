@@ -42,11 +42,11 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
         {
             TelegramUserKeyboard userKeyboard = new TelegramUserKeyboard(new DefaultButtons());
 
-            object group = userGroup.ExcecuteCommand($"SELECT Facult FROM ButtonFaultTable WHERE ChatId = '{chatId}'");
+            object group = userGroup.ExcecuteCommand($"SELECT Facult FROM ButtonFacultTable WHERE ChatId = '{chatId}'");
 
             if (group is null)
             {
-                if (userGroup.GetBool(userGroup.ExcecuteCommand($"INSERT INTO ButtonTable(Facult,ChatId) VALUES (N'{message}','{chatId}')")))
+                if (userGroup.GetBool(userGroup.ExcecuteCommand($"INSERT INTO ButtonFacultTable(Facult,ChatId) VALUES (N'{message}','{chatId}')")))
                 {
                     userKeyboard.AddButton(message);
                     var markupKeyboard = userKeyboard.GetKeyboard();
@@ -56,7 +56,7 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
             }
             else if (!group.ToString().Contains(message))
             {
-                if (userGroup.GetBool(userGroup.ExcecuteCommand($"UPDATE ButtonFaultTable SET Facult = N'{message}' WHERE ChatId = '{chatId}'")))
+                if (userGroup.GetBool(userGroup.ExcecuteCommand($"UPDATE ButtonFacultTable SET Facult = N'{message}' WHERE ChatId = '{chatId}'")))
                 {
                     userKeyboard.ReplaceButton(group.ToString(), message);
                     var markupKeyboard = userKeyboard.GetKeyboard();

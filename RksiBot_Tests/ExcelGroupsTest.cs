@@ -24,7 +24,7 @@ namespace RksiBot_Tests
             var excelTeachers = HttpRKSI.GetRecentDataArray(new ParserTeachers());
 
             Assert.NotNull(excelTeachers);
-            new ExcelGroups(@"D:\Users\gzaly\OneDrive\Рабочий стол\Groups.xlsx").SetDataExcel(excelTeachers);
+            new ExcelGroups(@"C:\Users\Григорий\Desktop\Groups.xlsx").SetDataExcel(excelTeachers);
         }
 
         [Fact]
@@ -33,7 +33,7 @@ namespace RksiBot_Tests
             var excelGroups = HttpRKSI.GetRecentDataArray(new ParserGroups());
 
             Assert.NotNull(excelGroups);
-            new ExcelGroups(@"D:\Users\gzaly\OneDrive\Рабочий стол\Groups.xlsx").SetDataExcel(excelGroups);
+            new ExcelGroups(@"C:\Users\Григорий\Desktop\Groups.xlsx").SetDataExcel(excelGroups);
         }
     }
 }

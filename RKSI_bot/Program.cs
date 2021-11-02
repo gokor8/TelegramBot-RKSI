@@ -21,9 +21,9 @@ namespace RKSI_bot
             try
             {
                 var excelGroups = HttpRKSI.GetRecentDataArray(new ParserGroups());
-                new ExcelGroups(@"D:\Users\gzaly\OneDrive\Рабочий стол\Groups.xlsx").SetDataExcel(excelGroups);
+                new ExcelGroups(@"C:\Users\Григорий\Desktop\Groups.xlsx").SetDataExcel(excelGroups);
                 var excelTeachers = HttpRKSI.GetRecentDataArray(new ParserTeachers());
-                new ExcelGroups(@"D:\Users\gzaly\OneDrive\Рабочий стол\Groups.xlsx").SetDataExcel(excelGroups);
+                new ExcelGroups(@"C:\Users\Григорий\Desktop\Groups.xlsx").SetDataExcel(excelGroups);
             }
             catch (Exception)
             { }
