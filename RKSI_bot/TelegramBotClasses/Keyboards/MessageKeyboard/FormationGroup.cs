@@ -10,7 +10,7 @@ namespace RKSI_bot.TelegramBotClasses.Keyboards
         public List<string> GetCoursGroups(int cours)
         {
             List<string> groups = new List<string>();
-            foreach (var group in Groups.GroupTitles)
+            foreach (var group in GroupsContainer.GroupTitles)
             {
                 string cleanCours = Regex.Replace(group, @"[^0-9]", "");
 

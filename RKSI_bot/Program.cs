@@ -1,11 +1,9 @@
 ﻿using Newtonsoft.Json;
 using RKSI_bot.TelegramElements;
 using RKSI_bot.Web;
-using RKSI_bot.Web.Https;
 using RKSI_bot.Web.Parsing;
 using RKSI_bot.WindowsInteractions;
 using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,11 +16,13 @@ namespace RKSI_bot
         {
             Console.OutputEncoding = Encoding.UTF8;
 
+            HttpRKSI httpRKSI = HttpRKSI.GetInstace();
+
             try
             {
-                var excelGroups = HttpRKSI.GetRecentDataArray(new ParserGroups());
+                var excelGroups = httpRKSI.GetRecentDataArray(new ParserGroups());
                 new ExcelGroups(@"C:\Users\Григорий\Desktop\Groups.xlsx").SetDataExcel(excelGroups);
-                var excelTeachers = HttpRKSI.GetRecentDataArray(new ParserTeachers());
+                var excelTeachers = httpRKSI.GetRecentDataArray(new ParserTeachers());
                 new ExcelGroups(@"C:\Users\Григорий\Desktop\Groups.xlsx").SetDataExcel(excelGroups);
             }
             catch (Exception)

@@ -6,9 +6,10 @@ using Telegram.Bot;
 
 namespace RKSI_bot
 {
-    internal class TelegramBot
+    public class TelegramBot
     {
         public static TelegramBotClient Bot;
+        public const string TelegramCode = "1283170424:AAHZTtV0Rehsc_MlEBZKKXJLaU4udCbsYd8";
 
         private MassegesHandler messageHandler;
         private KeyboardHandler keyboardHandler;
@@ -18,7 +19,7 @@ namespace RKSI_bot
 
         public TelegramBot()
         {
-            Bot = new TelegramBotClient("1283170424:AAHZTtV0Rehsc_MlEBZKKXJLaU4udCbsYd8");
+            Bot = new TelegramBotClient(TelegramCode);
             keyboardHandler = new KeyboardHandler(willEditMessages);
             messageHandler = new MassegesHandler();
             log = new LogConsole();
@@ -26,7 +27,7 @@ namespace RKSI_bot
 
         public async Task StartBot()
         {
-            await Bot.SetWebhookAsync("https://api.telegram.org/bot1283170424:AAHZTtV0Rehsc_MlEBZKKXJLaU4udCbsYd8/setWebhook?url=https://SSRtttteeessa:8443/1283170424:AAHZTtV0Rehsc_MlEBZKKXJLaU4udCbsYd8/");
+            await Bot.SetWebhookAsync($"https://api.telegram.org/bot{TelegramCode}/setWebhook?url=https://SSRtttteeessa:8443/{TelegramCode}/");
 
             Bot.OnMessage += (sender, MessageArgs) =>
             {

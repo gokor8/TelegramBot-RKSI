@@ -1,4 +1,5 @@
-﻿using RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.NudeMessage;
+﻿using RKSI_bot;
+using RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.NudeMessage;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,12 @@ namespace RksiBot_Tests
 {
     public class MessageTeacher_Test
     {
+        private TelegramBot telegramBot;
+        public MessageTeacher_Test()
+        {
+            telegramBot = new TelegramBot();
+        }
+
         [Fact]
         public void TeacherRequest_Test()
         {

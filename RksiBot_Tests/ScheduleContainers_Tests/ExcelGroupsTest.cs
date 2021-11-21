@@ -21,19 +21,19 @@ namespace RksiBot_Tests
         [Fact]
         public void SetTeacherData()
         {
-            var excelTeachers = HttpRKSI.GetRecentDataArray(new ParserTeachers());
+            var excelTeachers = HttpRKSI.GetInstace().GetRecentDataArray(new ParserTeachers());
 
             Assert.NotNull(excelTeachers);
-            new ExcelGroups(@"C:\Users\Григорий\Desktop\Groups.xlsx").SetDataExcel(excelTeachers);
+            new ExcelGroups(@"C:\Users\gvala\OneDrive\Рабочий стол\Groups.xlsx").SetDataExcel(excelTeachers);
         }
 
         [Fact]
         public void SetGroupData()
         {
-            var excelGroups = HttpRKSI.GetRecentDataArray(new ParserGroups());
+            var excelGroups = HttpRKSI.GetInstace().GetRecentDataArray(new ParserGroups());
 
             Assert.NotNull(excelGroups);
-            new ExcelGroups(@"C:\Users\Григорий\Desktop\Groups.xlsx").SetDataExcel(excelGroups);
+            new ExcelGroups(@"C:\Users\gvala\OneDrive\Рабочий стол\Groups.xlsx").SetDataExcel(excelGroups);
         }
     }
 }

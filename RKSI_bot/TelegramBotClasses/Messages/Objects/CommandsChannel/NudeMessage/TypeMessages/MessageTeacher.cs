@@ -1,4 +1,5 @@
-﻿using RKSI_bot.Web;
+﻿using RKSI_bot.SchedulesContainer;
+using RKSI_bot.Web;
 using RKSI_bot.Web.Https;
 using RKSI_bot.Web.Parsing;
 using System;
@@ -16,7 +17,13 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
 
         public void Invoke(string message, long chatId)
         {
-            HttpRKSI.SendScheduleMessage(message, chatId, new TeachersSchedule()).Wait();
+            /*foreach (var teacher in TeachersContainer.TeacherTitels)
+            {
+                if (teacher.Contains(message))
+                    message = teacher;
+            }*/
+
+            HttpRKSI.GetInstace().SendScheduleMessage(message, chatId, new TeachersSchedule()).Wait();
         }
     }
 }

@@ -9,13 +9,15 @@ using System.Web;
 
 namespace RKSI_bot.Web
 {
-    public static class HttpRKSI
+    public class HttpRKSI
     {
-        public static HttpClient Client;
-        private static HttpClientHandler handler;
-        private static CookieContainer cookieContainer;
+        private static readonly HttpRKSI httpRKSI = new HttpRKSI();
 
-        static HttpRKSI()
+        public HttpClient Client;
+        private HttpClientHandler handler;
+        public CookieContainer cookieContainer;
+
+        private HttpRKSI()
         {
             cookieContainer = new CookieContainer();
             handler = new HttpClientHandler() { CookieContainer = cookieContainer };
@@ -23,8 +25,17 @@ namespace RKSI_bot.Web
 
             SetDefaultHeaders();
         }
+        private void SetDefaultHeaders()
+        {
+            Client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36");
+            Client.DefaultRequestHeaders.Add("Referer", "https://www.rksi.ru/schedule");
+            Client.DefaultRequestHeaders.Add("Origin", "https://www.rksi.ru");
+            Client.DefaultRequestHeaders.Add("Host", "www.rksi.ru");
+            Client.DefaultRequestHeaders.Add("Accept-Language", "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7");
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        }
 
-        public static async Task SendScheduleMessage(string message, long chatId, Schedule typeShedule, bool isAllSchedule = false)
+        public async Task SendScheduleMessage(string message, long chatId, Schedule typeShedule, bool isAllSchedule = false)
         {
             string textForMessage = await typeShedule.GetParsedText(message, isAllSchedule);
             
@@ -39,7 +50,7 @@ namespace RKSI_bot.Web
             // Создаю класс, или в классе Parsing завожу нужные переменные, например: chatId, message, и в логику даю из класса эти значения
         }
 
-        public static string[][][] GetRecentDataArray(IParser parser)
+        public string[][][] GetRecentDataArray(IParser parser)
         {
             var htmlSchedule = Client.GetStringAsync("/schedule").Result;
 
@@ -48,14 +59,9 @@ namespace RKSI_bot.Web
             return excelData;
         }
 
-        public static void SetDefaultHeaders()
+        public static HttpRKSI GetInstace()
         {
-            Client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36");
-            Client.DefaultRequestHeaders.Add("Referer", "https://www.rksi.ru/schedule");
-            Client.DefaultRequestHeaders.Add("Origin", "https://www.rksi.ru");
-            Client.DefaultRequestHeaders.Add("Host", "www.rksi.ru");
-            Client.DefaultRequestHeaders.Add("Accept-Language", "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7");
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            return httpRKSI;
         }
     }
 }

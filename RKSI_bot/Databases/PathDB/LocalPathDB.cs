@@ -6,7 +6,7 @@ namespace RKSI_bot.Databases.PathDB
 {
     public class LocalPathDB : IPathDB
     {
-        public string PathDB { get; set; } = System.IO.Path.GetFullPath(@"..\..\..\") + $@"Databases\LocalDBs\";
+        public string PathDB { get; set; } = System.IO.Path.GetFullPath(@"..\..\..\..\") + $@"RKSI_bot\Databases\LocalDBs\";
 
         public LocalPathDB(string nameDB)
         {

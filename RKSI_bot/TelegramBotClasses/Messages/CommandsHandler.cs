@@ -2,12 +2,8 @@
 using RKSI_bot.Comand_Message.Commands_Objects;
 using RKSI_bot.Comand_Message.Objects.Commands_Group_Objects;
 using RKSI_bot.Commands.Commands_Objects;
-using RKSI_bot.Databases.PathDB;
 using RKSI_bot.TelegramBotClasses.MessageComands;
-using RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.NudeMessage;
 using RKSI_bot.TelegramElements;
-using RKSI_bot.Web;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,9 +28,9 @@ namespace RKSI_bot.ReservingObjects
             string message = chatInformation.Message.Text;
             long chatId = chatInformation.Message.Chat.Id;
             string chatType = chatInformation.Message.Chat.Type.ToString().ToLower();
+
             /* Ищу в List<Command_link> нужный Command_Link
              * в котором массив triggers имеет значение полученного string trigger */
-
             var command = handlerContainer.categorysCommands.FirstOrDefault(cmd => cmd.HasTrigger(message, chatType))?.ReturnCommand();
 
             if (command != null)

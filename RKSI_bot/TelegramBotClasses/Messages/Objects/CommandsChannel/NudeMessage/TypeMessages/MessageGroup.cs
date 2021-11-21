@@ -27,10 +27,10 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
         {
             string messageUnEscaped = message.Replace("пары:", "").Replace(" ","").ToUpper();
 
-            if (Groups.GroupTitles.FirstOrDefault(t => t.ToUpper().Trim().Equals(messageUnEscaped)) != null)
+            if (GroupsContainer.GroupTitles.FirstOrDefault(t => t.ToUpper().Trim().Equals(messageUnEscaped)) != null)
             {
                 RefreshKeyboard(message, chatId);
-                HttpRKSI.SendScheduleMessage(messageUnEscaped, chatId, new GroupsSchedule()).Wait();
+                HttpRKSI.GetInstace().SendScheduleMessage(messageUnEscaped, chatId, new GroupsSchedule()).Wait();
             }
             else
             {

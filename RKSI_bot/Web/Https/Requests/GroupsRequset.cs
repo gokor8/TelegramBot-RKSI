@@ -21,7 +21,7 @@ namespace RKSI_bot.Web.Https
             var byteArrayContent = new ByteArrayContent(bytes);
             byteArrayContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
 
-            var taskResponse = await HttpRKSI.Client.PostAsync("https://www.rksi.ru/schedule", byteArrayContent);
+            var taskResponse = await HttpRKSI.GetInstace().Client.PostAsync("https://www.rksi.ru/schedule", byteArrayContent);
             return await taskResponse.Content.ReadAsStringAsync();
         }
     }

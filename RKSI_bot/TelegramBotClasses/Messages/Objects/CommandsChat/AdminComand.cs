@@ -16,7 +16,7 @@ namespace RKSI_bot.Comand_Message.Commands_Objects
         {
             if (message.Message.Chat.Id == 399418047)
             {
-                new ScheduleDB(new Databases.PathDB.LocalPathDB("Database")).SendScheduleFromDB("id_person");
+                new ScheduleDB(new Databases.PathDB.LocalPathDB("Database")).SendScheduleFromDB("id_person").Wait();
             }
         }
     }
