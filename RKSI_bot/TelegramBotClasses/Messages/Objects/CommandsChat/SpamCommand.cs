@@ -34,7 +34,7 @@ namespace RKSI_bot.Comand_Message.Commands_Objects
 
             DataBase dataBase = new DataBase(message, chatId, new LocalPathDB("Database"));
 
-            if (groupsContainer.GroupsTitels.FirstOrDefault(t => t.ToUpper().Trim().Equals(message)) != null)
+            if (groupsContainer.Titels.FirstOrDefault(t => t.ToUpper().Trim().Equals(message)) != null)
             {
                 // N для киррилицы ''для значений
                 if (dataBase.GetBool(dataBase.ExcecuteCommand($"SELECT 1 FROM UserTable WHERE ChatId={chatId}")))

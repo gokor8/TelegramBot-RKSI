@@ -1,32 +1,23 @@
 ﻿using RKSI_bot.Databases.EntityDataBase;
-using RKSI_bot.SchedulesContainer;
 using RKSI_bot.Web;
 using RKSI_bot.Web.Parsing;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
 
 namespace RKSI_bot.Schedule.Containers
 {
     public abstract class BaseUnitsContainer
     {
         private HttpRKSI httpRKSI = HttpRKSI.GetInstace();
-        private List<string> Titels { get; set; }
+        public List<string> Titels { get; private set; }
 
-        protected BaseUnitsContainer(IParser parser, IUnit unit)
+        protected BaseUnitsContainer(IParser parser)
         {
-            Titels = httpRKSI.GetRecentDataArray(parser);
+            Titels = httpRKSI?.GetRecentDataArray(parser);
 
             if (Titels is null)
             {
-                using (var context = new CollageUnitsDb())
-                {
-                    foreach(var )
-
-                    Titels = units.Select(x => x.Name).ToList();
-                }
+                Titels = GetUnits().Select(x => x.Name).ToList();
             }
             else
             {
@@ -34,11 +25,7 @@ namespace RKSI_bot.Schedule.Containers
             }
         }
 
+        public abstract IEnumerable<IUnit> GetUnits();
         public abstract void RefreshTable();
-
-        protected List<string> GetTitels()
-        {
-            return Titels;
-        }
     }
 }

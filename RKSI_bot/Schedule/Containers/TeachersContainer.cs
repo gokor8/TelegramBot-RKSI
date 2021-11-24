@@ -1,14 +1,10 @@
 ﻿using RKSI_bot.Databases.EntityDataBase;
 using RKSI_bot.Databases.EntityDataBase.Tables;
 using RKSI_bot.Schedule.Containers;
-using RKSI_bot.Web;
 using RKSI_bot.Web.Parsing;
-using RKSI_bot.WindowsInteractions;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
 
 namespace RKSI_bot.SchedulesContainer
 {
@@ -16,12 +12,8 @@ namespace RKSI_bot.SchedulesContainer
     {
         private static readonly TeachersContainer teachersContainer = new TeachersContainer();
 
-        public List<string> TeacherTitels { get; set; }
-
-        private TeachersContainer() : base(new ParserTeachers(), new Teacher())
-        {
-            TeacherTitels = GetTitels();
-        }
+        private TeachersContainer() : base(new ParserTeachers())
+        { }
 
         public override void RefreshTable()
         {
@@ -29,18 +21,30 @@ namespace RKSI_bot.SchedulesContainer
             {
                 var teachers = context.Teachers.Select(x=>x.Name).ToList();
 
-                bool IsEqual = TeacherTitels.SequenceEqual(teachers);
+                bool IsEqual = Titels.SequenceEqual(teachers);
                 
                 if(!IsEqual)
                 {
                     context.Teachers.RemoveRange(context.Teachers);
 
-                    foreach(var teacher in TeacherTitels)
+                    foreach(var teacher in Titels)
                         context.Teachers.Add(new Teacher() { Name = teacher} );
 
                     context.SaveChanges();
                 }
             }
+        }
+
+        public override IEnumerable<IUnit> GetUnits()
+        {
+            IEnumerable<IUnit> teachers;
+
+            using (var context = new CollageUnitsDb())
+            {
+                teachers = context.Teachers.ToList();
+            }
+
+            return teachers;
         }
 
         public static TeachersContainer GetInstance()

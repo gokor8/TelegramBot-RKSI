@@ -10,6 +10,12 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
 {
     public class MessageTeacher : IMessageType
     {
+        private TeachersContainer teachersContainer;
+        public MessageTeacher()
+        {
+            teachersContainer = TeachersContainer.GetInstance();
+        }
+
         public bool CheckTrigger(string message)
         {
             return message.Replace(" ", "").All(c => char.IsLetter(c) || c == '.');
@@ -17,11 +23,11 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
 
         public void Invoke(string message, long chatId)
         {
-            /*foreach (var teacher in TeachersContainer.TeacherTitels)
+            foreach (var teacher in teachersContainer.Titels)
             {
                 if (teacher.Contains(message))
                     message = teacher;
-            }*/
+            }
 
             HttpRKSI.GetInstace().SendScheduleMessage(message, chatId, new TeachersSchedule()).Wait();
         }

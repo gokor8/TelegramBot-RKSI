@@ -12,26 +12,39 @@ namespace RKSI_bot.SchedulesContainer
     {
         private static readonly GroupsContainer groupsContainer = new GroupsContainer();
 
-        public List<string> GroupsTitels { get; set; }
-
-        private GroupsContainer() : base(new ParserGroups(), new Group())
-        {
-            GroupsTitels = GetTitels();
-        }
+        private GroupsContainer() : base(new ParserGroups())
+        { }
 
         public override void RefreshTable()
         {
             using (var context = new CollageUnitsDb())
             {
-                var groups = context.Teachers.Select(x => x.Name).ToList();
+                var teachers = context.Teachers.Select(x => x.Name).ToList();
 
-                bool IsEqual = GroupsTitels.SequenceEqual(groups);
+                bool IsEqual = Titels.SequenceEqual(teachers);
 
                 if (!IsEqual)
                 {
-                    context.Entry(GroupsTitels).Reload();
+                    context.Groups.RemoveRange(context.Groups);
+
+                    foreach (var teacher in Titels)
+                        context.Groups.Add(new Group() { Name = teacher });
+
+                    context.SaveChanges();
                 }
             }
+        }
+
+        public override IEnumerable<IUnit> GetUnits()
+        {
+            IEnumerable<IUnit> groups;
+
+            using (var context = new CollageUnitsDb())
+            {
+                groups = context.Groups.ToList();
+            }
+
+            return groups;
         }
 
         public static GroupsContainer GetInstance()
