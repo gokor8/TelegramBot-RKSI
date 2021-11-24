@@ -3,6 +3,7 @@ using RKSI_bot.Web.Https;
 using RKSI_bot.Web.Parsing;
 using RKSI_bot.Web.Parsing.BuildingMessage;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,6 +16,22 @@ namespace RKSI_bot.Web
         public ParserGroups()
         {
             htmlDocument = new HtmlDocument();
+        }
+
+        public List<string> GetParsedList(string html)
+        {
+            htmlDocument.LoadHtml(html);
+
+            var GroupNodes = htmlDocument.DocumentNode.SelectSingleNode("//select[@name='group']").SelectNodes(".//option");
+
+            var Groups = new List<string>();
+
+            foreach (var group in GroupNodes)
+            {
+                Groups.Add(group.InnerText);
+            }
+
+            return Groups;
         }
 
         public string GetSchedule(string html, bool IsAllSchedule)
@@ -55,25 +72,6 @@ namespace RKSI_bot.Web
             string firstMessage = $"<b>Пары на {TranslateDayOfWeek(date.DayOfWeek)}({date.Date.ToString("dd-MM-yyyy")}):\r\n{"=========================="}\r\n</b>";
 
             return firstMessage + message;
-        }
-
-        public string[][][] GetParsedList(string html)
-        {
-            htmlDocument.LoadHtml(html);
-
-            var Groups = htmlDocument.DocumentNode.SelectSingleNode("//select[@name='group']").SelectNodes(".//option");
-
-            string[][][] excelGroups = new string[1][][];
-            excelGroups[0] = new string[1][];
-            excelGroups[0][0] = new string[Groups.Count];
-
-            for (int group = 0; group < Groups.Count; group++)
-            {
-                excelGroups[0][0][group] = Groups[group].InnerText;
-               // Console.WriteLine($"Groups[{ group }] = \"{ Groups[group].InnerText }\" ;");
-            }
-
-            return excelGroups;
         }
     }
 }

@@ -39,7 +39,7 @@ namespace RKSI_bot
             Timer.Stop();
 
             var excelGroups = HttpRKSI.GetInstace().GetRecentDataArray(new ParserGroups());
-            new ExcelGroups(@"C:\Users\Григорий\Desktop\Groups.xlsx").SetDataExcel(excelGroups);
+            //new ExcelGroups(@"C:\Users\Григорий\Desktop\Groups.xlsx").SetDataExcel(excelGroups);
 
             _ = new ScheduleDB(new LocalPathDB("Database")).SendScheduleFromDB("id_person");
 

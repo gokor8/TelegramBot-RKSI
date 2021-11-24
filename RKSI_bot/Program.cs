@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using RKSI_bot.Databases.EntityDataBase;
 using RKSI_bot.TelegramElements;
 using RKSI_bot.Web;
 using RKSI_bot.Web.Parsing;
@@ -18,15 +19,14 @@ namespace RKSI_bot
 
             HttpRKSI httpRKSI = HttpRKSI.GetInstace();
 
-            try
+
+            using (var context = new CollageUnitsDb())
             {
-                var excelGroups = httpRKSI.GetRecentDataArray(new ParserGroups());
-                new ExcelGroups(@"C:\Users\Григорий\Desktop\Groups.xlsx").SetDataExcel(excelGroups);
-                var excelTeachers = httpRKSI.GetRecentDataArray(new ParserTeachers());
-                new ExcelGroups(@"C:\Users\Григорий\Desktop\Groups.xlsx").SetDataExcel(excelGroups);
+
+                var Groups = httpRKSI.GetRecentDataArray(new ParserGroups());
+                var Teachers = httpRKSI.GetRecentDataArray(new ParserTeachers());
+
             }
-            catch (Exception)
-            { }
 
             new AutoRunWindows().SetToAutoRun();
 

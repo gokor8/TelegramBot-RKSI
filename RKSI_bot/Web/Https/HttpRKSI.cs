@@ -1,5 +1,6 @@
 ﻿using RKSI_bot.Web.Https;
 using RKSI_bot.Web.Parsing;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -50,13 +51,13 @@ namespace RKSI_bot.Web
             // Создаю класс, или в классе Parsing завожу нужные переменные, например: chatId, message, и в логику даю из класса эти значения
         }
 
-        public string[][][] GetRecentDataArray(IParser parser)
+        public List<string> GetRecentDataArray(IParser parser)
         {
             var htmlSchedule = Client.GetStringAsync("/schedule").Result;
 
-            var excelData = parser.GetParsedList(htmlSchedule);
+            var collageUnits = parser.GetParsedList(htmlSchedule);
 
-            return excelData;
+            return collageUnits;
         }
 
         public static HttpRKSI GetInstace()

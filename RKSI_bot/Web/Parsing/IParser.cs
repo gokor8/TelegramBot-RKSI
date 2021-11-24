@@ -10,6 +10,6 @@ namespace RKSI_bot.Web.Parsing
     {
         string GetSchedule(string html, bool IsAllSchedule);
 
-        string[][][] GetParsedList(string html);
+        List<string> GetParsedList(string html);
     }
 }

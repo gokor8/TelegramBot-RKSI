@@ -12,10 +12,13 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
     public class MessageGroup : IMessageType
     {
         private DataBase userGroup;
+        private GroupsContainer groupsContainer;
 
         public MessageGroup(IPathDB pathDB)
         {
             userGroup = new DataBase(pathDB);
+
+            groupsContainer = GroupsContainer.GetInstance();
         }
 
         public bool CheckTrigger(string message)
@@ -27,7 +30,7 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
         {
             string messageUnEscaped = message.Replace("пары:", "").Replace(" ","").ToUpper();
 
-            if (GroupsContainer.GroupTitles.FirstOrDefault(t => t.ToUpper().Trim().Equals(messageUnEscaped)) != null)
+            if (groupsContainer.GroupsTitels.FirstOrDefault(t => t.ToUpper().Trim().Equals(messageUnEscaped)) != null)
             {
                 RefreshKeyboard(message, chatId);
                 HttpRKSI.GetInstace().SendScheduleMessage(messageUnEscaped, chatId, new GroupsSchedule()).Wait();

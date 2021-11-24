@@ -11,7 +11,8 @@ namespace RKSI_bot.Comand_Message.Commands_Objects
 {
     internal class SpamCommand
     {
-        //private MessageEventArgs message;
+        private GroupsContainer groupsContainer;
+
         private List<string> chatTypes;
         private List<long> spamIds;
 
@@ -22,6 +23,8 @@ namespace RKSI_bot.Comand_Message.Commands_Objects
         {
             chatTypes = new List<string> { "group", "supergroup", "private" };
             this.spamIds = spamIds;
+
+            groupsContainer = GroupsContainer.GetInstance();
         }
 
         public async Task Subscribe(string message, long chatId)
@@ -31,7 +34,7 @@ namespace RKSI_bot.Comand_Message.Commands_Objects
 
             DataBase dataBase = new DataBase(message, chatId, new LocalPathDB("Database"));
 
-            if (GroupsContainer.GroupTitles.FirstOrDefault(t => t.ToUpper().Trim().Equals(message)) != null)
+            if (groupsContainer.GroupsTitels.FirstOrDefault(t => t.ToUpper().Trim().Equals(message)) != null)
             {
                 // N для киррилицы ''для значений
                 if (dataBase.GetBool(dataBase.ExcecuteCommand($"SELECT 1 FROM UserTable WHERE ChatId={chatId}")))

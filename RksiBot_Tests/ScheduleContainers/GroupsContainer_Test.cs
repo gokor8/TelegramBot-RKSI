@@ -6,12 +6,11 @@ using Xunit;
 
 namespace RksiBot_Tests.ScheduleContainers_Tests
 {
-    public class TeacherContainer_Test
+    public class GroupsContainer_Test
     {
         [Fact]
-        public void Test_TeachersList_NotNull()
+        public void Test_GroupsList_NotNull()
         {
-            Assert.NotNull(TeachersContainer.TeacherTitels);
         }
     }
 }

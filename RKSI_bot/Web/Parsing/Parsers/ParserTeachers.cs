@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HtmlAgilityPack;
 using RKSI_bot.Web.Https;
@@ -17,22 +18,20 @@ namespace RKSI_bot.Web.Parsing
             htmlDocument = new HtmlDocument();
         }
 
-        public string[][][] GetParsedList(string html)
+        public List<string> GetParsedList(string html)
         {
             htmlDocument.LoadHtml(html);
 
-            var Groups = htmlDocument.DocumentNode.SelectSingleNode("//select[@name='teacher']").SelectNodes(".//option");
+            var TeacherNodes = htmlDocument.DocumentNode.SelectSingleNode("//select[@name='teacher']").SelectNodes(".//option");
 
-            string[][][] excelGroups = new string[1][][];
-            excelGroups[0] = new string[2][];
-            excelGroups[0][1] = new string[Groups.Count];
+            var Teachers = new List<string>();
 
-            for (int group = 0; group < Groups.Count; group++)
+            foreach (var teacher in TeacherNodes)
             {
-                excelGroups[0][1][group] = Groups[group].InnerText;
+                Teachers.Add(teacher.InnerText);
             }
 
-            return excelGroups;
+            return Teachers;
         }
 
         public string GetSchedule(string html, bool IsAllSchedule)
