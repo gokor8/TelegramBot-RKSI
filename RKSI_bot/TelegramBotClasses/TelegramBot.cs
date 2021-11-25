@@ -1,5 +1,6 @@
 ﻿using RKSI_bot.Logs;
 using RKSI_bot.TelegramBotClasses.Keyboards;
+using RKSI_bot.WindowsInteractions;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using Telegram.Bot;
@@ -8,8 +9,8 @@ namespace RKSI_bot
 {
     public class TelegramBot
     {
-        public static TelegramBotClient Bot;
-        public const string TelegramCode = "1283170424:AAHZTtV0Rehsc_MlEBZKKXJLaU4udCbsYd8";
+        public static TelegramBotClient Bot { get; private set; }
+        public readonly string TelegramCode = new FileTelegramApi().GetApiKey();
 
         private MassegesHandler messageHandler;
         private KeyboardHandler keyboardHandler;

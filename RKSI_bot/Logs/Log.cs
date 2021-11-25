@@ -11,7 +11,7 @@ namespace RKSI_bot.Logs
         {
             var message = messageInfo.Message;
 
-            string textLog = message.Text + $"|| {message.Chat.Id} - {message.Chat.FirstName} : {message.Chat.LastName} -- {DateTime.Now} | Username - {message.Chat.Username}";
+            string textLog = message.Text + $"|| {message.Chat?.Id} - {message.Chat?.FirstName} : {message.Chat?.LastName} -- {DateTime.Now} | Username - {message.Chat?.Username}";
 
             PrintLog(textLog);
         }
@@ -20,7 +20,7 @@ namespace RKSI_bot.Logs
         {
             var message = messageInfo.CallbackQuery.Message;
 
-            string textLog = message.Text + $"|{message.Chat.Username} | {message.Chat.Id} - {message.Chat.FirstName} : {message.Chat.LastName} -- {DateTime.Now} | Username - {message.Chat.Username}";
+            string textLog = message.Text + $"|{message.Chat?.Username} | {message.Chat?.Id} - {message.Chat?.FirstName} : {message.Chat?.LastName} -- {DateTime.Now} | Username - {message.Chat?.Username}";
 
             PrintLog(textLog);
         }

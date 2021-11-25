@@ -3,7 +3,6 @@ using RKSI_bot.SchedulesContainer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace RksiBot_Tests.ScheduleContainers_Tests
@@ -22,7 +21,7 @@ namespace RksiBot_Tests.ScheduleContainers_Tests
         {
             using (var context = new CollageUnitsDb())
             {
-                context.Teachers.RemoveRange(context.Teachers);
+                context.Groups.RemoveRange(context.Groups);
             }
             // Отчищаю таблицу
 
