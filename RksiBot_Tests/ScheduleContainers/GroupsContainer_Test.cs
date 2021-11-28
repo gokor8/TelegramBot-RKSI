@@ -10,10 +10,10 @@ namespace RksiBot_Tests.ScheduleContainers_Tests
     public class GroupsContainer_Test
     {
 
-        GroupsContainer groupsContainer;
+        GroupsDataStore groupsContainer;
         public GroupsContainer_Test()
         {
-            groupsContainer = GroupsContainer.GetInstance();
+            groupsContainer = GroupsDataStore.GetInstance();
         }
 
         [Fact]

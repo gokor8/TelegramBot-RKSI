@@ -9,10 +9,10 @@ namespace RksiBot_Tests.ScheduleContainers_Tests
 {
     public class TeacherContainer_Test
     {
-        TeachersContainer teachersContainer;
+        TeachersDataStore teachersContainer;
         public TeacherContainer_Test()
         {
-            teachersContainer = TeachersContainer.GetInstance();
+            teachersContainer = TeachersDataStore.GetInstance();
         }
 
         [Fact]
