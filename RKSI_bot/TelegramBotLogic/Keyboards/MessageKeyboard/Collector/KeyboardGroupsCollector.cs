@@ -5,20 +5,20 @@ using System.Text.RegularExpressions;
 
 namespace RKSI_bot.TelegramBotClasses.Keyboards
 {
-    class FormationGroup
+    class KeyboardGroupsCollector
     {
         private GroupsDataStore GroupsContainer;
 
-        public FormationGroup()
+        public KeyboardGroupsCollector()
         {
             GroupsContainer = GroupsDataStore.GetInstance();
         }
 
-        public List<string> GetCoursGroups(int cours)
+        public List<string> GetListGroups(int cours)
         {
             List<string> groups = new List<string>();
 
-            foreach (var group in GroupsContainer.Titels)
+            foreach (var group in GroupsContainer.GetTitels())
             {
                 string cleanCours = Regex.Replace(group, @"[^0-9]", "");
 

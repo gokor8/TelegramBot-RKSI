@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace RKSI_bot.Databases
 {
-    class ScheduleDB : DataBase
+    class SpamScheduleDataBase : DataBase
     {
-        public ScheduleDB(IPathDB pathDB) : base(pathDB) { }
+        public SpamScheduleDataBase(IPathDB pathDB) : base(pathDB) { }
 
         public async Task SendScheduleFromDB(string attribute, string table = "UserTable")
         {
-            using (SqlConnection connection = CheckConnection())
+            using (SqlConnection connection = Connect())
             {
                 string sqlCommand = $"SELECT {attribute}, Facult FROM {table};";
                 SqlCommand command = new SqlCommand(sqlCommand, connection);

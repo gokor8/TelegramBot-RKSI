@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace RKSI_bot.SchedulesContainer
 {
-    public sealed class GroupsDataStore : BaseUnitsDataStore
+    public sealed class GroupsDataStore : UnitsDataStore
     {
         private static readonly GroupsDataStore groupsContainer = new GroupsDataStore();
 
@@ -35,7 +35,12 @@ namespace RKSI_bot.SchedulesContainer
             }
         }
 
-        public override IEnumerable<IUnit> GetUnits()
+        public List<string> GetClearTitels()
+        {
+            return Titels.Select(x=> { return x.Replace("b", "").Replace("w", ""); }).ToList();
+        }
+
+        public override IEnumerable<IUnit> GetDataBaseUnits()
         {
             IEnumerable<IUnit> groups;
 

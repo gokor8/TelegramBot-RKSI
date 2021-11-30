@@ -1,11 +1,10 @@
-﻿using RKSI_bot.TelegramBotClasses.Keyboards.UserKeyboard.Buttons;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace RKSI_bot.TelegramBotClasses.Keyboards.UserKeyboard
 {
-    class DefaultButtons : IButtons
+    class DefaultButtons
     {
         private List<string> buttons;
 

@@ -7,6 +7,6 @@ namespace RKSI_bot.ReservingObjects
     {
         string [] Triggers { get; set; }
 
-        void Execute(MessageEventArgs messageInfo);
+        abstract void Execute(MessageEventArgs messageInfo);
     }
 }

@@ -7,10 +7,10 @@ using Xunit;
 
 namespace RksiBot_Tests.ScheduleContainers_Tests
 {
-    public class TeacherContainer_Test
+    public class TeacherDataStore_Test
     {
         TeachersDataStore teachersContainer;
-        public TeacherContainer_Test()
+        public TeacherDataStore_Test()
         {
             teachersContainer = TeachersDataStore.GetInstance();
         }
@@ -28,7 +28,7 @@ namespace RksiBot_Tests.ScheduleContainers_Tests
             {
                 List<string> teachersDb = context.Teachers.Select(x => x.Name).ToList();
 
-                Assert.True(teachersContainer.Titels.SequenceEqual(teachersDb));
+                Assert.True(teachersContainer.GetTitels().SequenceEqual(teachersDb));
             }
             // Смотрю. правильно ли записалась она из спарсенных с сайта преподавателей
         }
@@ -36,13 +36,13 @@ namespace RksiBot_Tests.ScheduleContainers_Tests
         [Fact]
         public void GetTitels_ReturnedNotNull()
         {
-            Assert.NotNull(teachersContainer.Titels);
+            Assert.NotNull(teachersContainer.GetTitels());
         }
 
         [Fact]
         public void GetTeachersfromDataBase_NotWorkingSite_ReturnedNotNull()
         {
-            List<string> TeacherTitels = teachersContainer.GetUnits().Select(n=>n.Name).ToList();
+            List<string> TeacherTitels = teachersContainer.GetDataBaseUnits().Select(n=>n.Name).ToList();
             // Иммитация нерабочего сайта
 
             Assert.NotNull(TeacherTitels);

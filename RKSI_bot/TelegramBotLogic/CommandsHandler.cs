@@ -25,35 +25,29 @@ namespace RKSI_bot.TelegramBotClasses.Messages
 
         public async Task Invoke(MessageEventArgs chatInformation)
         {
-            SpamCommand spamCommand = new SpamCommand();
+            SpamSubcribe spamCommand = new SpamSubcribe();
 
-            string message = chatInformation.Message.Text.Replace("b","").Replace("w","");
+            string message = chatInformation.Message.Text;
+            chatInformation.Message.Text = message.Contains("/") ? message : message.Replace("b", "").Replace("w", "");
+            message = chatInformation.Message.Text;
+
             long chatId = chatInformation.Message.Chat.Id;
             ChatType chatType = chatInformation.Message.Chat.Type;
             
-            /* Ищу в List<Command_link> нужный Command_Link
-             * в котором массив triggers имеет значение полученного string trigger */
+            
             var command = _factoriesContainer.FirstOrDefault(cmd => cmd.ChatType == chatType)?.FindCommand(message);
 
             if (command != null)
             {
                 if ((SpamIds?.Count ?? 0) != 0)
                     SpamIds.Remove(chatId);
-                // Если триггер найден в каком - либо ICommands
-                // выполняем метод в классе, который унаследован от интерфейса
 
+                // Если триггер найден в каком - либо ICommands, выполняем метод в классе
                 command.Execute(chatInformation);
             }
-            else
+            else if(SpamIds.Contains(chatId))
             {
-                if (SpamIds.Contains(chatId) && spamCommand.chatTypes.FirstOrDefault(c=>c == chatType)== chatType)
-                {
-                    await spamCommand.Subscribe(message, chatId);
-                }
-                else if (chatType is ChatType.Private)
-                {
-                    new Message().Execute(chatInformation);
-                }
+                await spamCommand.Subscribe(message, chatId);
             }
         }
     }

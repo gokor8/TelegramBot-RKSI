@@ -6,18 +6,18 @@ using System.Linq;
 
 namespace RKSI_bot.Schedule.Containers
 {
-    public abstract class BaseUnitsDataStore
+    public abstract class UnitsDataStore
     {
         private HttpRKSI httpRKSI = HttpRKSI.GetInstace();
-        public List<string> Titels { get; private set; }
+        protected List<string> Titels { get; set; }
 
-        protected BaseUnitsDataStore(IParser parser)
+        protected UnitsDataStore(IParser parser)
         {
             Titels = httpRKSI?.GetRecentDataArray(parser);
 
             if (Titels is null)
             {
-                Titels = GetUnits().Select(x => x.Name).ToList();
+                Titels = GetDataBaseUnits().Select(x => x.Name).ToList();
             }
             else
             {
@@ -25,7 +25,11 @@ namespace RKSI_bot.Schedule.Containers
             }
         }
 
-        public abstract IEnumerable<IUnit> GetUnits();
+        public List<string> GetTitels()
+        {
+            return Titels;
+        }
+        public abstract IEnumerable<IUnit> GetDataBaseUnits();
         public abstract void RefreshTable();
     }
 }

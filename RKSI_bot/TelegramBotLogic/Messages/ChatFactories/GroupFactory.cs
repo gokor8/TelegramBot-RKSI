@@ -1,7 +1,8 @@
 ﻿using RKSI_bot.Comand_Message.Commands_Objects;
+using RKSI_bot.Comand_Message.Objects.Commands_Group_Objects;
 using RKSI_bot.Commands.Commands_Objects;
 using RKSI_bot.ReservingObjects;
-using Telegram.Bot.Args;
+using RKSI_bot.TelegramBotLogic.Messages.ChatCommands.Groups;
 using Telegram.Bot.Types.Enums;
 
 namespace RKSI_bot.TelegramBotClasses.Messages.ChatFactories
@@ -14,7 +15,11 @@ namespace RKSI_bot.TelegramBotClasses.Messages.ChatFactories
 
             _commands = new ICommand[]
             {
-
+                new MeGroups("/me", "🎃"),
+                new List("/list", "🕴"),
+                new Start("/start", "/help", "🦾"),
+                new Message("пары "),
+                new Group("/group", "🏫"),
             };
         }
 

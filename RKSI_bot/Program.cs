@@ -14,17 +14,6 @@ namespace RKSI_bot
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            HttpRKSI httpRKSI = HttpRKSI.GetInstace();
-
-
-            using (var context = new CollageUnitsDb())
-            {
-
-                var Groups = httpRKSI.GetRecentDataArray(new ParserGroups());
-                var Teachers = httpRKSI.GetRecentDataArray(new ParserTeachers());
-
-            }
-
             new AutoRunWindows().SetToAutoRun();
 
             new TimerSchedule();

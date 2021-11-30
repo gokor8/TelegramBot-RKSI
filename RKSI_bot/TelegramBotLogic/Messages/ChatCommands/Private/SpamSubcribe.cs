@@ -4,26 +4,23 @@ using RKSI_bot.TelegramBotLogic.Messages;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Telegram.Bot.Types.Enums;
 
 namespace RKSI_bot.Comand_Message.Commands_Objects
 {
-    public class SpamCommand
+    public class SpamSubcribe
     { 
-        private GroupsDataStore groupsContainer = GroupsDataStore.GetInstance();
-
-        public readonly List<ChatType> chatTypes = new List<ChatType> { ChatType.Private };
+        private GroupsDataStore groupsDataStore = GroupsDataStore.GetInstance();
         private List<long> spamIds = SpamDataStore.GetInstace().MessageIds;
-
+        
         public async Task Subscribe(string message, long chatId)
         {
             DataBase dataBase = new DataBase(message, chatId, new LocalPathDB("Database"));
 
-            message = groupsContainer.Titels.FirstOrDefault(g => message.ToUpper().Equals(g.ToUpper().Replace("B", "").Replace("W", "")));
+            message = groupsDataStore.GetClearTitels().FirstOrDefault(g => message.ToUpper().Equals(g.ToUpper()));
 
             if (message != null)
             {
-                message = groupsContainer.Titels.FirstOrDefault(g => g.Contains(message));
+                message = groupsDataStore.GetTitels().FirstOrDefault(g => g.Contains(message));
                 // N для киррилицы '' для значений
                 if (dataBase.GetBool(dataBase.ExcecuteCommand($"SELECT 1 FROM UserTable WHERE ChatId={chatId}")))
                 {

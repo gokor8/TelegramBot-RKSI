@@ -1,6 +1,5 @@
 ﻿using RKSI_bot.ReservingObjects;
 using RKSI_bot.TelegramBotClasses.Messages.Objects.CommandsChannel.NudeMessage;
-using System.Text.RegularExpressions;
 using Telegram.Bot.Args;
 
 namespace RKSI_bot.Comand_Message.Objects.Commands_Group_Objects
@@ -14,12 +13,15 @@ namespace RKSI_bot.Comand_Message.Objects.Commands_Group_Objects
             Triggers = triggers;
         }
 
-        public void Execute(MessageEventArgs MessageInfo)
+        public void Execute(MessageEventArgs messageInfo)
         {
-            string message = Regex.Replace(MessageInfo.Message.Text, @"\s+", "").Replace("b","").Replace("w","").ToUpper();
-            long chatId = MessageInfo.Message.Chat.Id;
+            string message = messageInfo.Message.Text.Replace(" ","").ToUpper();
+            long chatId = messageInfo.Message.Chat.Id;
 
-            new MessageFactory()?.CreateMessage(message).Invoke(message, chatId);
+            var messageSender = new MessageFactory()?.CreateMessage(message);
+
+            if (messageSender != null)
+                messageSender.Invoke(message, chatId);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace RKSI_bot
 
         public object ExcecuteCommand(string command)
         {
-            using (SqlConnection connection = CheckConnection())
+            using (SqlConnection connection = Connect())
             {
                 if (connection is null)
                     throw new Exception("class DataBase:27 |Connection = null|");
@@ -63,7 +63,7 @@ namespace RKSI_bot
                 return false;
         }
 
-        protected SqlConnection CheckConnection()
+        protected SqlConnection Connect()
         {
             SqlConnection Connection = new SqlConnection();
 

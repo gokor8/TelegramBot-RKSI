@@ -23,8 +23,7 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
 
         public void Invoke(string message, long chatId)
         {
-            
-            string foundTeacher = teachersContainer.Titels.FirstOrDefault(t => t.ToUpper().Replace(" ", "").Contains(message));
+            string foundTeacher = teachersContainer.GetTitels().FirstOrDefault(t => t.ToUpper().Replace(" ", "").Contains(message));
 
             if (foundTeacher != null)
                 HttpRKSI.GetInstace().SendScheduleMessage(foundTeacher, chatId, new TeachersSchedule()).Wait();

@@ -1,4 +1,5 @@
 ﻿using RKSI_bot.Comand_Message.Commands_Objects;
+using RKSI_bot.Comand_Message.Objects.Commands_Group_Objects;
 using RKSI_bot.Commands.Commands_Objects;
 using RKSI_bot.ReservingObjects;
 using Telegram.Bot.Args;
@@ -18,6 +19,7 @@ namespace RKSI_bot.TelegramBotClasses.Messages.ChatFactories
                 new List("/list", "🕴"),
                 new Start("/start", "/help", "🦾"),
                 new Group("/group", "🏫"),
+                new Message(".","-"),
                 new Admin("вайяяя")
             };
         }

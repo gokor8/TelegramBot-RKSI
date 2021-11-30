@@ -24,7 +24,7 @@ namespace RksiBot_Tests.TelegramBotLogic.Messages.ChatCommands.Private
             long chatId = 399418047;
 
             dataStore.Add(chatId);
-            await new SpamCommand().Subscribe(message, chatId);
+            await new SpamSubcribe().Subscribe(message, chatId);
         }
     }
 }

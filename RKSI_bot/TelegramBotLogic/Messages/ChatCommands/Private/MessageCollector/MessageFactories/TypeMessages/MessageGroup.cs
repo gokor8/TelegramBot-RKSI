@@ -27,11 +27,11 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
 
         public void Invoke(string message, long chatId)
         {
-            string foundGroup = groupsContainer.Titels.FirstOrDefault(g => message.Equals(g.ToUpper().Replace("B", "").Replace("W", "")));
+            string foundGroup = groupsContainer.GetClearTitels().FirstOrDefault(g => message.Equals(g.ToUpper()));
 
             if (foundGroup != null)
             {
-                foundGroup = groupsContainer.Titels.FirstOrDefault(g => g.Contains(foundGroup));
+                foundGroup = groupsContainer.GetTitels().FirstOrDefault(g => g.Contains(foundGroup));
 
                 RefreshKeyboard(foundGroup, chatId);
                 HttpRKSI.GetInstace().SendScheduleMessage(foundGroup, chatId, new GroupsSchedule()).Wait();

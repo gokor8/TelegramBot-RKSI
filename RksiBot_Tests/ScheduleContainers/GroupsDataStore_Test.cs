@@ -7,11 +7,11 @@ using Xunit;
 
 namespace RksiBot_Tests.ScheduleContainers_Tests
 {
-    public class GroupsContainer_Test
+    public class GroupsDataStore_Test
     {
 
         GroupsDataStore groupsContainer;
-        public GroupsContainer_Test()
+        public GroupsDataStore_Test()
         {
             groupsContainer = GroupsDataStore.GetInstance();
         }
@@ -29,7 +29,7 @@ namespace RksiBot_Tests.ScheduleContainers_Tests
             {
                 List<string> teachersDb = context.Groups.Select(x => x.Name).ToList();
 
-                Assert.True(groupsContainer.Titels.SequenceEqual(teachersDb));
+                Assert.True(groupsContainer.GetTitels().SequenceEqual(teachersDb));
             }
             // Смотрю. правильно ли записалась она из спарсенных с сайта преподавателей
         }
@@ -37,18 +37,27 @@ namespace RksiBot_Tests.ScheduleContainers_Tests
         [Fact]
         public void GetTitels_ReturnedNotNull()
         {
-            Assert.NotNull(groupsContainer.Titels);
+            Assert.NotNull(groupsContainer.GetTitels());
         }
 
         [Fact]
         public void GetTeachersfromDataBase_NotWorkingSite_ReturnedNotNull()
         {
-            List<string> TeacherTitels = groupsContainer.GetUnits().Select(n => n.Name).ToList();
+            List<string> TeacherTitels = groupsContainer.GetDataBaseUnits().Select(n => n.Name).ToList();
             // Иммитация нерабочего сайта
 
             Assert.NotNull(TeacherTitels);
             // Проверяю получило ли свойство корректную таблицу с преподавателями
         }
 
+        [Fact]
+        public void GetClearTitels_POKC34_ReturnTrue()
+        {
+            string expected = "ПОКС-34";
+
+            string actual = groupsContainer.GetClearTitels().FirstOrDefault(x=>x == "ПОКС-34");
+
+            Assert.Equal(expected,actual);
+        }
     }
 }

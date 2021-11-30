@@ -36,7 +36,7 @@ namespace RKSI_bot.TelegramBotClasses.Keyboards
 
         private async Task ButtonsLogic(long chatId, int cours)
         {
-            var gorupList = new FormationGroup().GetCoursGroups(cours);
+            var gorupList = new KeyboardGroupsCollector().GetListGroups(cours);
             var keyboard = new TelegramMessageKeyboard().GetKeyboard(gorupList, 3);
 
             if (editMessages.Keys.Contains(chatId))

@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace RKSI_bot.SchedulesContainer
 {
-    public sealed class TeachersDataStore : BaseUnitsDataStore
+    public sealed class TeachersDataStore : UnitsDataStore
     {
         private static readonly TeachersDataStore teachersContainer = new TeachersDataStore();
 
@@ -35,7 +35,7 @@ namespace RKSI_bot.SchedulesContainer
             }
         }
 
-        public override IEnumerable<IUnit> GetUnits()
+        public override IEnumerable<IUnit> GetDataBaseUnits()
         {
             IEnumerable<IUnit> teachers;
 
