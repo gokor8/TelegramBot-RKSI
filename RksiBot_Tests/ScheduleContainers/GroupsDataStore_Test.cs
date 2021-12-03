@@ -17,31 +17,26 @@ namespace RksiBot_Tests.ScheduleContainers_Tests
         }
 
         [Fact]
-        public void RefreshDataBase_WithClearDb_ReturnedTrue()
-        {
-            using (var context = new CollageUnitsDb())
-            {
-                context.Groups.RemoveRange(context.Groups);
-            }
-            // Отчищаю таблицу
-
-            using (var context = new CollageUnitsDb())
-            {
-                List<string> teachersDb = context.Groups.Select(x => x.Name).ToList();
-
-                Assert.True(groupsContainer.GetTitels().SequenceEqual(teachersDb));
-            }
-            // Смотрю. правильно ли записалась она из спарсенных с сайта преподавателей
-        }
-
-        [Fact]
         public void GetTitels_ReturnedNotNull()
         {
-            Assert.NotNull(groupsContainer.GetTitels());
+            var groupTitels = groupsContainer.GetTitels();
+
+            Assert.NotNull(groupTitels);
         }
 
         [Fact]
-        public void GetTeachersfromDataBase_NotWorkingSite_ReturnedNotNull()
+        public void GetClearTitels_ReturnedNotNull()
+        {
+            string expected = "ПОКС-34";
+            var groupTitels = groupsContainer.GetClearTitels();
+
+            string foundClearGroup = groupTitels.FirstOrDefault(g=>g.Equals(expected));
+
+            Assert.NotNull(foundClearGroup);
+        }
+
+        [Fact]
+        public void GetTeacherTitels_NotWorkingSite_ReturnedNotNull()
         {
             List<string> TeacherTitels = groupsContainer.GetDataBaseUnits().Select(n => n.Name).ToList();
             // Иммитация нерабочего сайта
@@ -51,7 +46,7 @@ namespace RksiBot_Tests.ScheduleContainers_Tests
         }
 
         [Fact]
-        public void GetClearTitels_POKC34_ReturnTrue()
+        public void GetClearTitels_FindPOKC34_ReturnTrue()
         {
             string expected = "ПОКС-34";
 

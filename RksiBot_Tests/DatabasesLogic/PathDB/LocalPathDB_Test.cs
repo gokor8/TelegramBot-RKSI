@@ -13,7 +13,7 @@ namespace RksiBot_Tests.DB_Tests.PathDB
         {
             LocalPathDB localPathDB = new LocalPathDB("Database");
 
-            string excpectedPathDB = @"C:\Users\gvala\OneDrive\Рабочий стол\TelegramBot-RKSI\RKSI_bot\Databases\LocalDBs\Database";
+            string excpectedPathDB = @"C:\Users\gvala\OneDrive\Рабочий стол\TelegramBot-RKSI\RKSI_bot\Databases\Database";
 
             Assert.Equal(excpectedPathDB, localPathDB.PathDB);
         } 

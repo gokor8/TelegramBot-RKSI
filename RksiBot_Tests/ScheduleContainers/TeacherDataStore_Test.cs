@@ -16,31 +16,15 @@ namespace RksiBot_Tests.ScheduleContainers_Tests
         }
 
         [Fact]
-        public void RefreshDataBase_WithClearDb_ReturnedTrue()
-        {
-            using (var context = new CollageUnitsDb())
-            {
-                context.Teachers.RemoveRange(context.Teachers);
-            }
-            // Отчищаю таблицу
-
-            using (var context = new CollageUnitsDb())
-            {
-                List<string> teachersDb = context.Teachers.Select(x => x.Name).ToList();
-
-                Assert.True(teachersContainer.GetTitels().SequenceEqual(teachersDb));
-            }
-            // Смотрю. правильно ли записалась она из спарсенных с сайта преподавателей
-        }
-
-        [Fact]
         public void GetTitels_ReturnedNotNull()
         {
-            Assert.NotNull(teachersContainer.GetTitels());
+            var teacherTitels = teachersContainer.GetTitels();
+
+            Assert.NotNull(teacherTitels);
         }
 
         [Fact]
-        public void GetTeachersfromDataBase_NotWorkingSite_ReturnedNotNull()
+        public void GetTeachersTitels_NotWorkingSite_ReturnedNotNull()
         {
             List<string> TeacherTitels = teachersContainer.GetDataBaseUnits().Select(n=>n.Name).ToList();
             // Иммитация нерабочего сайта

@@ -1,7 +1,4 @@
-﻿using RKSI_bot.Databases.EntityDataBase;
-using RKSI_bot.Web;
-using RKSI_bot.Web.Parsing;
-using System;
+﻿using System;
 using System.Text;
 using System.Threading.Tasks;
 

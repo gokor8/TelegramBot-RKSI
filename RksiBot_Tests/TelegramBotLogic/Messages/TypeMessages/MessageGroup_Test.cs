@@ -19,7 +19,7 @@ namespace RksiBot_Tests.Messages_Tests.TypeMessages_Test
         [Theory]
         [InlineData("Покс-34")]
         [InlineData("Покс-34b")]
-        public void Invoke_GroupMessage_ReturnedMessage(string message)
+        public void Invoke_GroupMessage_ReturnMessage(string message)
         {
             message = message.Replace("b", "").Replace("w", "");
 

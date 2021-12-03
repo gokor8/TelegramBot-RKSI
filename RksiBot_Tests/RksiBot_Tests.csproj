@@ -29,4 +29,8 @@
     <ProjectReference Include="..\RKSI_bot\RKSI_bot.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DatabasesLogic\EntityDataBase\" />
+  </ItemGroup>
+
 </Project>

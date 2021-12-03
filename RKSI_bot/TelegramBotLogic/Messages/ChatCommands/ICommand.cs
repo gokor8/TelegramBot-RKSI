@@ -5,8 +5,9 @@ namespace RKSI_bot.ReservingObjects
 {
     public interface ICommand
     {
+        bool IsExecuted { get; }
         string [] Triggers { get; set; }
 
-        abstract void Execute(MessageEventArgs messageInfo);
+        abstract void Execute(Telegram.Bot.Types.Message messageInfo);
     }
 }

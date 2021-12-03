@@ -30,14 +30,14 @@ namespace RKSI_bot
         {
             await Bot.SetWebhookAsync($"https://api.telegram.org/bot{TelegramCode}/setWebhook?url=https://SSRtttteeessa:8443/{TelegramCode}/");
 
-            Bot.OnMessage += (sender, MessageArgs) =>
+            Bot.OnMessage += (sender, messageArgs) =>
             {
-                log.SetLog(MessageArgs);
+                log.SetLog(messageArgs);
 
                 int value;
-                willEditMessages.TryRemove(MessageArgs.Message.Chat.Id, out value);
+                willEditMessages.TryRemove(messageArgs.Message.Chat.Id, out value);
 
-                messageHandler.OnMessage(MessageArgs);
+                messageHandler.OnMessage(messageArgs.Message);
             };
 
             Bot.OnCallbackQuery += (sender, CallbackData) =>

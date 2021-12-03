@@ -19,7 +19,7 @@ namespace RksiBot_Tests
         [InlineData("Арутюнян М.М.")] // Не будет работаь, так как есть пробелы. В проде они убираются
         [InlineData("АрутюнянМ.М")]
         [InlineData("Арутюнян")]
-        public void Invoke_TeacherMessage_ReturnedMessage(string message)
+        public void Invoke_TeacherMessage_ReturnMessage(string message)
         {
             long chatID = 399418047;
 

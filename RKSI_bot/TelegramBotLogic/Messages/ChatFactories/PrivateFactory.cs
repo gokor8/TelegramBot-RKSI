@@ -2,7 +2,6 @@
 using RKSI_bot.Comand_Message.Objects.Commands_Group_Objects;
 using RKSI_bot.Commands.Commands_Objects;
 using RKSI_bot.ReservingObjects;
-using Telegram.Bot.Args;
 using Telegram.Bot.Types.Enums;
 
 namespace RKSI_bot.TelegramBotClasses.Messages.ChatFactories
@@ -41,7 +40,7 @@ namespace RKSI_bot.TelegramBotClasses.Messages.ChatFactories
                 }
             }
 
-            return null;
+            return new Message();
         }
     }
 }

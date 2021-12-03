@@ -9,7 +9,7 @@ namespace RksiBot_Tests.Web.Parsing.Parsers
     public class ParserGroups_Test
     {
         [Fact]
-        public void GetParsedList_Test_ReturnDatasList()
+        public void GetParsedList_ReturnDataList()
         {
             var httpRKSI = HttpRKSI.GetInstace();
 

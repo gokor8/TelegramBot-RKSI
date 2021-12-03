@@ -3,6 +3,7 @@ using RKSI_bot.TelegramBotClasses.Messages;
 using System;
 using System.Threading.Tasks;
 using Telegram.Bot.Args;
+using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
 namespace RKSI_bot
@@ -16,12 +17,12 @@ namespace RKSI_bot
             commands = new CommandsHandler();
         }
 
-        public void OnMessage(MessageEventArgs chatInformation)
+        public void OnMessage(Message messageInformation)
         {
             Task.Run(async () =>
             {
-                long chatId = chatInformation.Message.Chat.Id;
-                var messageType = chatInformation.Message.Type;
+                long chatId = messageInformation.Chat.Id;
+                var messageType = messageInformation.Type;
 
                 if (messageType != MessageType.Text)
                 {
@@ -30,7 +31,7 @@ namespace RKSI_bot
                 }
                 else
                 {
-                    await commands.Invoke(chatInformation);
+                    await commands.Invoke(messageInformation);
                 }
             });
         }

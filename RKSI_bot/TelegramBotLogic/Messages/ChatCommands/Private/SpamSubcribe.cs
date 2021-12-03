@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 namespace RKSI_bot.Comand_Message.Commands_Objects
 {
     public class SpamSubcribe
-    { 
+    {
         private GroupsDataStore groupsDataStore = GroupsDataStore.GetInstance();
         private List<long> spamIds = SpamDataStore.GetInstace().MessageIds;
-        
+
+        public bool IsSubcribe { get; private set; }
+
         public async Task Subscribe(string message, long chatId)
         {
             DataBase dataBase = new DataBase(message, chatId, new LocalPathDB("Database"));
@@ -38,6 +40,7 @@ namespace RKSI_bot.Comand_Message.Commands_Objects
             else
                 await TelegramBot.Bot.SendTextMessageAsync(chatId, "Такой группы нету");
 
+            IsSubcribe = true;
             spamIds.Remove(chatId);
         }
     }

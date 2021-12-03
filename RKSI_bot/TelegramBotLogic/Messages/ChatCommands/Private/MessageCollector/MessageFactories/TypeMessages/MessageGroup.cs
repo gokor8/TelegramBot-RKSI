@@ -44,7 +44,7 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
 
         private void RefreshKeyboard(string message, long chatId)
         {
-            TelegramUserKeyboard userKeyboard = new TelegramUserKeyboard(new DefaultButtons());
+            TelegramUserKeyboard userKeyboard = new TelegramUserKeyboard();
 
             object group = userGroup.ExcecuteCommand($"SELECT Facult FROM ButtonFacultTable WHERE ChatId = '{chatId}'");
 

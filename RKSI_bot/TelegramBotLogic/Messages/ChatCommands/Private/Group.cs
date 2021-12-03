@@ -8,7 +8,7 @@ namespace RKSI_bot.Commands.Commands_Objects
     internal class Group : ICommand
     {
         public string[] Triggers { get; set; }
-
+        public bool IsExecuted { get; private set; }
         private List<long> _spamIds = SpamDataStore.GetInstace().MessageIds;
 
         public Group(params string[] triggers)
@@ -16,10 +16,12 @@ namespace RKSI_bot.Commands.Commands_Objects
             Triggers = triggers;
         }
 
-        public void Execute(MessageEventArgs messageInfo)
+        public void Execute(Telegram.Bot.Types.Message messageInfo)
         {
-            _spamIds.Add(messageInfo.Message.Chat.Id);
-            TelegramBot.Bot.SendTextMessageAsync(messageInfo.Message.Chat.Id, "Введите свою группу (Пример: ЧПОКС-51)");
+            _spamIds.Add(messageInfo.Chat.Id);
+            TelegramBot.Bot.SendTextMessageAsync(messageInfo.Chat.Id, "Введите свою группу (Пример: ЧПОКС-51)").Wait();
+
+            IsExecuted = true;
         }
     }
 }

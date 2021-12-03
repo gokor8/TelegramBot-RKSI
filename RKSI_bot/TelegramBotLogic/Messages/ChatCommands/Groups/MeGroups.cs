@@ -1,9 +1,5 @@
 ﻿using RKSI_bot.Comand_Message.Commands_Objects;
 using RKSI_bot.Databases.PathDB;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Telegram.Bot.Args;
 
 namespace RKSI_bot.TelegramBotLogic.Messages.ChatCommands.Groups
 {
@@ -13,17 +9,20 @@ namespace RKSI_bot.TelegramBotLogic.Messages.ChatCommands.Groups
         {
 
         }
-        public override void Execute(MessageEventArgs messageInfo)
+
+        public override void Execute(Telegram.Bot.Types.Message messageInfo)
         {
-            long chatId = messageInfo.Message.Chat.Id;
+            long chatId = messageInfo.Chat.Id;
             TelegramBot.Bot.SendTextMessageAsync(chatId, "Подождите, 3 секунды, ищу информацию в базе данных...");
 
-            object faculty = new DataBase(messageInfo.Message.Text, messageInfo.Message.Chat.Id, new LocalPathDB("Database")).ExcecuteCommand($"SELECT Facult FROM UserTable WHERE ChatId = '{chatId}'");
+            object faculty = new DataBase(messageInfo.Text, messageInfo.Chat.Id, new LocalPathDB("Database")).ExcecuteCommand($"SELECT Facult FROM UserTable WHERE ChatId = '{chatId}'");
 
             if (faculty != null)
-                TelegramBot.Bot.SendTextMessageAsync(messageInfo.Message.Chat.Id, messageInfo.Message.Chat.Title + " : " + faculty.ToString());
+                TelegramBot.Bot.SendTextMessageAsync(messageInfo.Chat.Id, messageInfo.Chat.Title + " : " + faculty.ToString());
             else
-                TelegramBot.Bot.SendTextMessageAsync(messageInfo.Message.Chat.Id, "Ты пока не подписался на рассылку");
+                TelegramBot.Bot.SendTextMessageAsync(messageInfo.Chat.Id, "Ты пока не подписался на рассылку");
+
+            IsExecuted = true;
         }
     }
 }

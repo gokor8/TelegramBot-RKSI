@@ -18,7 +18,7 @@ namespace RKSI_bot.TelegramBotClasses.Messages.ChatFactories
                 new MeGroups("/me", "🎃"),
                 new List("/list", "🕴"),
                 new Start("/start", "/help", "🦾"),
-                new Message("пары "),
+                new Message("пары ", "Пары "),
                 new Group("/group", "🏫"),
             };
         }
@@ -35,6 +35,7 @@ namespace RKSI_bot.TelegramBotClasses.Messages.ChatFactories
                     }
                 }
             }
+
             return null;
         }
     }

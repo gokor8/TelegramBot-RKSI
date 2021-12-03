@@ -10,17 +10,19 @@ namespace RKSI_bot.Comand_Message.Commands_Objects
     class Admin : ICommand
     {
         public string[] Triggers { get; set; }
-
+        public bool IsExecuted { get; private set; }
         public Admin(params string[] triggers)
         {
             Triggers = triggers;
         }
 
-        public void Execute(MessageEventArgs messageInfo)
+        public void Execute(Telegram.Bot.Types.Message messageInfo)
         {
-            if (messageInfo.Message.Chat.Id == 399418047)
+            if (messageInfo.Chat.Id == 399418047)
             {
-                new SpamScheduleDataBase(new Databases.PathDB.LocalPathDB("Database")).SendScheduleFromDB("id_person").Wait();
+                new SpamScheduleDataBase(new Databases.PathDB.LocalPathDB("Database")).SendScheduleFromDB("ChatId").Wait();
+
+                IsExecuted = true;
             }
         }
     }

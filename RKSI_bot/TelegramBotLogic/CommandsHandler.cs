@@ -8,7 +8,6 @@ using RKSI_bot.TelegramElements;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Telegram.Bot.Args;
 using Telegram.Bot.Types.Enums;
 
 namespace RKSI_bot.TelegramBotClasses.Messages
@@ -23,16 +22,16 @@ namespace RKSI_bot.TelegramBotClasses.Messages
             _factoriesContainer = new List<ChatFactory>() { new GroupFactory(), new PrivateFactory() };
         }
 
-        public async Task Invoke(MessageEventArgs chatInformation)
+        public async Task Invoke(Telegram.Bot.Types.Message messageInfo)
         {
             SpamSubcribe spamCommand = new SpamSubcribe();
 
-            string message = chatInformation.Message.Text;
-            chatInformation.Message.Text = message.Contains("/") ? message : message.Replace("b", "").Replace("w", "");
-            message = chatInformation.Message.Text;
+            string message = messageInfo.Text;
+            messageInfo.Text = message.Contains("/") ? message : message.Replace("b", "").Replace("w", "");
+            message = messageInfo.Text;
 
-            long chatId = chatInformation.Message.Chat.Id;
-            ChatType chatType = chatInformation.Message.Chat.Type;
+            long chatId = messageInfo.Chat.Id;
+            ChatType chatType = messageInfo.Chat.Type;
             
             
             var command = _factoriesContainer.FirstOrDefault(cmd => cmd.ChatType == chatType)?.FindCommand(message);
@@ -43,7 +42,7 @@ namespace RKSI_bot.TelegramBotClasses.Messages
                     SpamIds.Remove(chatId);
 
                 // Если триггер найден в каком - либо ICommands, выполняем метод в классе
-                command.Execute(chatInformation);
+                command.Execute(messageInfo);
             }
             else if(SpamIds.Contains(chatId))
             {

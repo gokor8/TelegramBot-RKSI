@@ -9,18 +9,19 @@ namespace RKSI_bot.ReservingObjects
     class List : ICommand
     {
         public string[] Triggers { get; set; }
-
+        public bool IsExecuted { get; private set; }
         public List(params string[] triggers)
         {
             Triggers = triggers;
         }
 
-        public void Execute(MessageEventArgs messageInfo)
+        public void Execute(Telegram.Bot.Types.Message messageInfo)
         {
             Dictionary<string, string> courses = new Dictionary<string, string>() { { "1 курс", "1" }, { "2 курс", "2" }, { "3 курс", "3" }, { "4 курс", "4" } };
             var keyboard = new TelegramMessageKeyboard().GetKeyboard(courses, courses.Count);
 
-            TelegramBot.Bot.SendTextMessageAsync(messageInfo.Message.Chat.Id, "-----------\r\n|РКСИ|\r\n-----------", replyMarkup: keyboard);
+            TelegramBot.Bot.SendTextMessageAsync(messageInfo.Chat.Id, "-----------\r\n|РКСИ|\r\n-----------", replyMarkup: keyboard).Wait();
+            IsExecuted = true;
         }
     }
 }
