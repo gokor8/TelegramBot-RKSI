@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Telegram.Bot.Exceptions;
 
 namespace RKSI_bot.Web
 {
@@ -38,13 +39,14 @@ namespace RKSI_bot.Web
 
         public async Task SendScheduleMessage(string message, long chatId, Schedule typeShedule, bool isAllSchedule = false)
         {
-            string textForMessage = await typeShedule.GetParsedText(message, isAllSchedule);
+            var textsForMessage = await typeShedule.GetParsedText(message, isAllSchedule);
             
             try
             {
-                await TelegramBot.Bot.SendTextMessageAsync(chatId, textForMessage, Telegram.Bot.Types.Enums.ParseMode.Html);
+                foreach(var textMessage in textsForMessage)
+                    await TelegramBot.Bot.SendTextMessageAsync(chatId, textMessage, Telegram.Bot.Types.Enums.ParseMode.Html);
             }
-            catch (System.Exception exc)
+            catch (ApiRequestException exc)
             {
                 System.Console.WriteLine(exc);
             }

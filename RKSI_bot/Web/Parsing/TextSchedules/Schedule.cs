@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RKSI_bot.Web
+namespace RKSI_bot.Web.Parsing
 {
     public abstract class Schedule
     {

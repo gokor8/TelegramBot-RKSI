@@ -50,6 +50,7 @@ namespace RKSI_bot.Web.Parsing.BuildingMessage
                     }
                 }
                 else if (messageString.Length > 57)
+
                 {
                     int lenght = 57 - line.Length;
 
@@ -61,6 +62,11 @@ namespace RKSI_bot.Web.Parsing.BuildingMessage
             }
 
             return line;
+        }
+
+        protected string ClearHtmlSpaces(string text)
+        {
+           return text.Replace("<br>", "\r\n").Replace("<b>", "").Replace("</br>", "\r\n").Replace("</b>", "");
         }
     }
 }

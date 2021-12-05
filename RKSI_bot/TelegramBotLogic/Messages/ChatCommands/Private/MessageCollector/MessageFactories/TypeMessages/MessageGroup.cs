@@ -12,11 +12,12 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
     {
         private DataBase userGroup;
         private GroupsDataStore groupsContainer;
-
-        public MessageGroup(IPathDB pathDB)
+        private string _addWord;
+        public MessageGroup(IPathDB pathDB, string addWord = "")
         {
             userGroup = new DataBase(pathDB);
 
+            _addWord = addWord;
             groupsContainer = GroupsDataStore.GetInstance();
         }
 
@@ -44,6 +45,7 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
 
         private void RefreshKeyboard(string message, long chatId)
         {
+            message += _addWord + message;
             TelegramUserKeyboard userKeyboard = new TelegramUserKeyboard();
 
             object group = userGroup.ExcecuteCommand($"SELECT Facult FROM ButtonFacultTable WHERE ChatId = '{chatId}'");

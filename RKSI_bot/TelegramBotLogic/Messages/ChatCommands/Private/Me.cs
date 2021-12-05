@@ -1,11 +1,6 @@
 ﻿
 using RKSI_bot.Databases.PathDB;
 using RKSI_bot.ReservingObjects;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Text;
-using Telegram.Bot.Args;
 
 namespace RKSI_bot.Comand_Message.Commands_Objects
 {

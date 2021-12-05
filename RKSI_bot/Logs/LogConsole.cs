@@ -6,9 +6,11 @@ namespace RKSI_bot.Logs
 {
     class LogConsole : Log
     {
-        public override void PrintLog(string message)
+        protected override void PrintLog(string message)
         {
             Console.WriteLine(message);
+
+            IsWrited = true;
         }
     }
 }

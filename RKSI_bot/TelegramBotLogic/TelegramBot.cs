@@ -14,7 +14,8 @@ namespace RKSI_bot
 
         private MassegesHandler messageHandler;
         private KeyboardHandler keyboardHandler;
-        private Log log;
+        private Log _log = new LogConsole();
+        private Log _fileLog = new LogConsole();
 
         private ConcurrentDictionary<long, int> willEditMessages = new ConcurrentDictionary<long, int>();
 
@@ -23,7 +24,6 @@ namespace RKSI_bot
             Bot = new TelegramBotClient(TelegramCode);
             keyboardHandler = new KeyboardHandler(willEditMessages);
             messageHandler = new MassegesHandler();
-            log = new LogConsole();
         }
 
         public async Task StartBot()
@@ -32,17 +32,21 @@ namespace RKSI_bot
 
             Bot.OnMessage += (sender, messageArgs) =>
             {
-                log.SetLog(messageArgs);
+                var messageInfo = messageArgs.Message;
+
+                _log.SetLog(messageInfo);
+                _fileLog.SetLog(messageInfo);
 
                 int value;
-                willEditMessages.TryRemove(messageArgs.Message.Chat.Id, out value);
+                willEditMessages.TryRemove(messageInfo.Chat.Id, out value);
 
-                messageHandler.OnMessage(messageArgs.Message);
+                messageHandler.OnMessage(messageInfo);
             };
 
             Bot.OnCallbackQuery += (sender, CallbackData) =>
             {
-                log.SetLog(CallbackData);
+                _log.SetLog(CallbackData);
+                _fileLog.SetLog(CallbackData);
 
                 keyboardHandler.OnCallbackKeyboard(CallbackData.CallbackQuery.Data, CallbackData.CallbackQuery.Message.Chat.Id);
             };

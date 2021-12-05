@@ -9,7 +9,7 @@ using System.Web;
 
 namespace RKSI_bot.Web.Https
 {
-    class GroupsRequset : IScheduleRequests
+    public class GroupsRequset : IScheduleRequests
     {
         public async Task<string> SendRKSI(string currentEncoding)
         {

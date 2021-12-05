@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 using Telegram.Bot.Args;
+using Telegram.Bot.Types;
 
 namespace RKSI_bot.Logs
 {
-    abstract class Log
+    public abstract class Log
     {
-        public void SetLog(MessageEventArgs messageInfo)
+        public bool IsWrited { get; protected set; }
+        public void SetLog(Message messageInfo)
         {
-            var message = messageInfo.Message;
+            var message = messageInfo;
 
             string textLog = message.Text + $"|| {message.Chat?.Id} - {message.Chat?.FirstName} : {message.Chat?.LastName} -- {DateTime.Now} | Username - {message.Chat?.Username}";
 
@@ -25,6 +27,6 @@ namespace RKSI_bot.Logs
             PrintLog(textLog);
         }
 
-        public abstract void PrintLog(string message);
+        protected abstract void PrintLog(string message);
     }
 }

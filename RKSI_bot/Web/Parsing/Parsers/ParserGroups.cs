@@ -34,8 +34,9 @@ namespace RKSI_bot.Web
             return Groups;
         }
 
-        public string GetSchedule(string html, bool IsAllSchedule)
+        public List<string> GetSchedule(string html, bool IsAllSchedule)
         {
+            string[] nodes = new string[2] { "<b>", "</b>" };
             int day = 0;
 
             htmlDocument.LoadHtml(html);
@@ -43,35 +44,37 @@ namespace RKSI_bot.Web
             if (htmlDocument.DocumentNode.SelectSingleNode($"//b[contains(text(),'{DateTime.Today.AddDays(day).Day}')]") == null)
             {
                 if (htmlDocument.DocumentNode.SelectSingleNode($"//b[contains(text(),'{DateTime.Today.AddDays(day + 1).Day}')]") == null)
-                    return "Нету расписания на эту группу";
+                    return new List<string> { "Нету расписания на эту группу" };
                 else
                     day += 1;
             }
 
             DateTime date = DateTime.Today.AddDays(day).Date;
+            string firstMessage = $"<b>Пары на {TranslateDayOfWeek(date.DayOfWeek)}({date.Date.ToString("dd-MM-yyyy")}):\r\n{"=========================="}\r\n</b>";
+
+            List<string> messageList = new List<string> { firstMessage };
+
+
             var h3Node = htmlDocument.DocumentNode.SelectSingleNode($"//b[contains(text(),'{date.Day}')]");
-
-            string[] nodes = new string[2] { "<b>", "</b>" };
-            string message = "";
-
             foreach (var node in h3Node.SelectNodes(".//following-sibling::*"))
             {
                 if (node.Name.ToLower() == "hr")
                 {
+                    if (messageList[messageList.Count - 1].Length > 3870)
+                        messageList.Add("");
+
                     if (IsAllSchedule)
-                       message += "--------------------------\r\n";
+                        messageList[messageList.Count - 1] += "--------------------------\r\n";
                     else
                         break;
                 }
                 else if (node.InnerHtml == "")
                     break;
                 else
-                    message += nodes[0] + node.InnerHtml.Replace("<br>", "\r\n").Replace("<b>", "").Replace("</br>", "\r\n").Replace("</b>", "") + nodes[1] + "\r\n\r\n";
+                    messageList[messageList.Count - 1] += nodes[0] + ClearHtmlSpaces(node.InnerHtml) + nodes[1] + "\r\n\r\n";
             }
 
-            string firstMessage = $"<b>Пары на {TranslateDayOfWeek(date.DayOfWeek)}({date.Date.ToString("dd-MM-yyyy")}):\r\n{"=========================="}\r\n</b>";
-
-            return firstMessage + message;
+            return messageList;
         }
     }
 }

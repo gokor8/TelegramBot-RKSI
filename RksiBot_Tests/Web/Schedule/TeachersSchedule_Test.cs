@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace RksiBot_Tests.Schedule_Tests
@@ -9,15 +10,15 @@ namespace RksiBot_Tests.Schedule_Tests
     public class TeachersSchedule_Test
     {
         [Fact]
-        public void GetGroupsHtml_NotNull()
+        public async Task GetGroupsHtml_NotNull()
         {
             string message = "Арутюнян М.М.";
 
             TeachersSchedule groupsSchedule = new TeachersSchedule();
 
-            string schedule = groupsSchedule.GetParsedText(message).Result;
+            List<string> schedule = await groupsSchedule.GetParsedText(message);
 
-            Assert.NotNull(schedule);
+            Assert.True(schedule[0].Length > 70);
         }
     }
 }

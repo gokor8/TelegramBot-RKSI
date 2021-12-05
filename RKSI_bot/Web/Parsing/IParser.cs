@@ -8,7 +8,7 @@ namespace RKSI_bot.Web.Parsing
 {
     public interface IParser
     {
-        string GetSchedule(string html, bool IsAllSchedule);
+        List<string> GetSchedule(string html, bool IsAllSchedule);
 
         List<string> GetParsedList(string html);
     }

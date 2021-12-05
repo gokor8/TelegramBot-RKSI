@@ -29,7 +29,7 @@ namespace RKSI_bot.TelegramBotClasses.Messages.ChatFactories
             {
                 foreach (var findTrgger in command.Triggers)
                 {
-                    if (message.Contains(findTrgger) && message.Length < 20)
+                    if (message.Contains(findTrgger) && message.Length < 25)
                     {
                         return command;
                     }
