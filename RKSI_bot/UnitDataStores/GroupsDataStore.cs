@@ -1,6 +1,6 @@
 ﻿using RKSI_bot.Databases.EntityDataBase;
 using RKSI_bot.Databases.EntityDataBase.Tables;
-using RKSI_bot.Schedule.Containers;
+using RKSI_bot.Schedule.UnitDataStores;
 using RKSI_bot.Web;
 using System;
 using System.Collections.Generic;
@@ -19,24 +19,19 @@ namespace RKSI_bot.UnitDataStores
         {
             using (var context = new CollageUnitsDb())
             {
-                try
+                var groups = context.Groups.Select(x => x.Name).ToList();
+
+                bool IsEqual = Titels.SequenceEqual(groups);
+
+                if (!IsEqual)
                 {
-                    var groups = context.Groups.Select(x => x.Name).ToList();
+                    context.Groups.RemoveRange(context.Groups);
 
-                    bool IsEqual = Titels.SequenceEqual(groups);
+                    foreach (var group in Titels)
+                        context.Groups.Add(new Group() { Name = group });
 
-                    if (!IsEqual)
-                    {
-                        context.Groups.RemoveRange(context.Groups);
-
-                        foreach (var group in Titels)
-                            context.Groups.Add(new Group() { Name = group });
-
-                        context.SaveChanges();
-                    }
-
+                    context.SaveChanges();
                 }
-                catch (Exception e) { Console.WriteLine(e); }
             }
         }
 
