@@ -28,13 +28,12 @@ namespace RKSI_bot.TelegramBotClasses.Messages
 
             string message = messageInfo.Text;
             messageInfo.Text = message.Contains("/") ? message : message.Replace("b", "").Replace("w", "");
-            message = messageInfo.Text;
 
             long chatId = messageInfo.Chat.Id;
             ChatType chatType = messageInfo.Chat.Type;
             
             
-            var command = _factoriesContainer.FirstOrDefault(cmd => cmd.ChatType == chatType)?.FindCommand(message);
+            var command = _factoriesContainer.FirstOrDefault(cmd => cmd.ChatType == chatType)?.FindCommand(messageInfo);
 
             if (command != null)
             {

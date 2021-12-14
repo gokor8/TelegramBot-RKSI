@@ -1,12 +1,12 @@
-﻿using Xunit;
+﻿using RKSI_bot;
 using RKSI_bot.Comand_Message.Objects.Commands_Group_Objects;
-using RKSI_bot;
+using Xunit;
 
-namespace RksiBot_Tests.TelegramBotLogic.Messages.ChatCommands.Private.NudeMessage
+namespace RksiBot_Tests.TelegramBotLogic.Messages.ChatCommands.Private.MessageCollector
 {
-    public class Message_Test
+    public class Message_TestGroup
     {
-        public Message_Test()
+        public Message_TestGroup()
         {
             new TelegramBot();
         }

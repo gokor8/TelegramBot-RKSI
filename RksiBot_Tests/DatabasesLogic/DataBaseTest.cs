@@ -10,7 +10,7 @@ namespace RksiBot_Tests
         [Fact]
         public void Connect_ToKeyboardDB_ReturnNotNullExcecute()
         {
-            var localDBPath = new LocalPathDB("Database");
+            var localDBPath = new LocalPathDb("Database");
 
             localDBPath.PathDB = localDBPath.PathDB.Replace("RksiBot_Tests", "RKSI_bot");
             long chatId = 12;
@@ -23,7 +23,7 @@ namespace RksiBot_Tests
         [Fact]
         public void TestConnection_ReturnNoException()
         {
-            DataBase dataBase = new DataBase("Amogus", 12, new LocalPathDB("Database"));
+            DataBase dataBase = new DataBase("Amogus", 12, new LocalPathDb("Database"));
 
             Assert.NotNull(dataBase);
         }

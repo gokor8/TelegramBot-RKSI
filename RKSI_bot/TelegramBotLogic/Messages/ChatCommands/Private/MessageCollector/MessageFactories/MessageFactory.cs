@@ -14,7 +14,7 @@ namespace RKSI_bot.TelegramBotClasses.Messages.Objects.CommandsChannel.NudeMessa
         {
             messageTypes = new IMessageType[] 
             { 
-                new MessageGroup(new LocalPathDB("DataBase")), 
+                new MessageGroup(new LocalPathDb("DataBase")), 
                 new MessageTeacher()
             };
         }

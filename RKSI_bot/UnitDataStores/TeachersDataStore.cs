@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RKSI_bot.SchedulesContainer
+namespace RKSI_bot.UnitDataStores
 {
     public sealed class TeachersDataStore : UnitsDataStore
     {

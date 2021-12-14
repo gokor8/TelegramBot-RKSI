@@ -1,8 +1,5 @@
-﻿using RKSI_bot.Comand_Message.Commands_Objects;
-using RKSI_bot.Commands.Commands_Objects;
-using RKSI_bot.ReservingObjects;
-using Telegram.Bot.Args;
-using Telegram.Bot.Types.Enums;
+﻿using RKSI_bot.ReservingObjects;
+using Telegram.Bot.Types;
 using Xunit;
 
 namespace RKSI_bot.TelegramBotClasses.Messages.ChatFactories
@@ -25,7 +22,9 @@ namespace RKSI_bot.TelegramBotClasses.Messages.ChatFactories
         [InlineData("Amogus")]
         public void FindCommand_BadCommand_ReturnedMessageInChat(string command)
         {
-            var foundCommand = new PrivateFactory().FindCommand(command);
+            Message messageInformation = buildTelegramMessage(command, 399418047);
+
+            var foundCommand = new PrivateFactory().FindCommand(messageInformation);
 
             Assert.NotNull(foundCommand);
         }
@@ -41,16 +40,23 @@ namespace RKSI_bot.TelegramBotClasses.Messages.ChatFactories
         [InlineData("Amogus")]
         public void ExecuteCommands_BadCommand_ReturnedMessageInChat(string command)
         {
-            Telegram.Bot.Types.Message messageInformation = new Telegram.Bot.Types.Message();
-            messageInformation.Text = command;
-            messageInformation.Chat = new Telegram.Bot.Types.Chat() { Id = 399418047 };
+            Message messageInformation = buildTelegramMessage(command, 399418047);
 
             var privateFactory = new PrivateFactory();
 
-            ICommand foundedCommand = privateFactory.FindCommand(command);
+            ICommand foundedCommand = privateFactory.FindCommand(messageInformation);
             foundedCommand.Execute(messageInformation);
 
             Assert.True(foundedCommand.IsExecuted);
+        }
+
+        private Message buildTelegramMessage(string message, long chatId)
+        {
+            Message messageInformation = new Message();
+            messageInformation.Text = message;
+            messageInformation.Chat = new Chat() { Id = chatId };
+
+            return messageInformation;
         }
     }
 }

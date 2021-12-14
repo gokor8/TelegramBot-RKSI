@@ -1,10 +1,6 @@
 ﻿using RKSI_bot.Databases.PathDB;
 using RKSI_bot.ReservingObjects;
-using RKSI_bot.TelegramBotClasses.Keyboards.UserKeyboard;
 using RKSI_bot.TelegramElements;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Telegram.Bot.Args;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace RKSI_bot.Commands.Commands_Objects
@@ -22,9 +18,12 @@ namespace RKSI_bot.Commands.Commands_Objects
         {
             TelegramBot.Bot.SendTextMessageAsync(messageInfo.Chat.Id, "Вот список команд:\n\r" +
             "/help \r\n" +
-            "/group - Присылаю твое расписание каждый день \r\n" +
+            "/group - Присылаю расписание твоей группы каждый день \r\n" +
             "/me - Группа, которую ты указал в рассылке расписания\r\n" +
-            "Либо просто пришли мне свою группу, и я скину расписание(Пример: чпокс-51)",
+            "/list - Список групп" + 
+            "Либо просто пришли мне свою группу или преподавателя, и я скину расписание" +
+            "(Пример: чпокс-51, Салийко | Для групп: пары ...)\r\n" +
+            "Так же я работаю в группах и беседах",
                replyMarkup: GetUserKeyobardFormDB(messageInfo.Chat.Id)).Wait();
 
             IsExecuted = true;
@@ -34,7 +33,7 @@ namespace RKSI_bot.Commands.Commands_Objects
         {
             TelegramUserKeyboard userKeyboard = new TelegramUserKeyboard();
 
-            var userGroup = new DataBase(new LocalPathDB("Database")).ExcecuteCommand($"SELECT Facult FROM ButtonFacultTable WHERE ChatId = '{chatId}'");
+            var userGroup = new DataBase(new LocalPathDb("Database")).ExcecuteCommand($"SELECT Facult FROM ButtonFacultTable WHERE ChatId = '{chatId}'");
 
             if (userGroup != null)
             {

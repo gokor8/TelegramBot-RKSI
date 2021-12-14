@@ -16,7 +16,7 @@ namespace RKSI_bot.Comand_Message.Commands_Objects
 
         public async Task Subscribe(string message, long chatId)
         {
-            DataBase dataBase = new DataBase(message, chatId, new LocalPathDB("Database"));
+            DataBase dataBase = new DataBase(message, chatId, new LocalPathDb("Database"));
 
             message = groupsDataStore.GetClearTitels().FirstOrDefault(g => message.ToUpper().Equals(g.ToUpper()));
 
@@ -36,11 +36,14 @@ namespace RKSI_bot.Comand_Message.Commands_Objects
                     if (canAdd)
                         await TelegramBot.Bot.SendTextMessageAsync(chatId, "Вы подписались на рассылку расписания");
                 }
+                IsSubcribe = true;
             }
             else
+            {
                 await TelegramBot.Bot.SendTextMessageAsync(chatId, "Такой группы нету");
+                IsSubcribe = false;
+            }
 
-            IsSubcribe = true;
             spamIds.Remove(chatId);
         }
     }

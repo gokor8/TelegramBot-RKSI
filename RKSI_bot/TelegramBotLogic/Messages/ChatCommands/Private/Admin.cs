@@ -20,7 +20,7 @@ namespace RKSI_bot.Comand_Message.Commands_Objects
         {
             if (messageInfo.Chat.Id == 399418047)
             {
-                new SpamScheduleDataBase(new Databases.PathDB.LocalPathDB("Database")).SendScheduleFromDB("ChatId").Wait();
+                new SpamScheduleDataBase(new Databases.PathDB.LocalPathDb("Database")).SendScheduleFromDB("ChatId").Wait();
 
                 IsExecuted = true;
             }

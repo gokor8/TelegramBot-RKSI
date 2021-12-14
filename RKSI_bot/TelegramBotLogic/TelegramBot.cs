@@ -15,7 +15,7 @@ namespace RKSI_bot
         private MassegesHandler messageHandler;
         private KeyboardHandler keyboardHandler;
         private Log _log = new LogConsole();
-        private Log _fileLog = new LogConsole();
+        private Log _fileLog = new LogFile();
 
         private ConcurrentDictionary<long, int> willEditMessages = new ConcurrentDictionary<long, int>();
 

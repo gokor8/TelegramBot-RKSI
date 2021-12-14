@@ -11,7 +11,7 @@ namespace RksiBot_Tests.DB_Tests.PathDB
         [Fact]
         public void GetLocalPathDB_ReturnRKSI_botDataBase()
         {
-            LocalPathDB localPathDB = new LocalPathDB("Database");
+            LocalPathDb localPathDB = new LocalPathDb("Database");
 
             string excpectedPathDB = @"C:\Users\gvala\OneDrive\Рабочий стол\TelegramBot-RKSI\RKSI_bot\Databases\Database";
 

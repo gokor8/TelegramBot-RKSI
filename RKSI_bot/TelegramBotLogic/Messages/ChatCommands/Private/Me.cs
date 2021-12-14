@@ -18,7 +18,7 @@ namespace RKSI_bot.Comand_Message.Commands_Objects
             long chatId = messageInfo.Chat.Id;
             TelegramBot.Bot.SendTextMessageAsync(chatId, "Подождите, 3 секунды, ищу информацию в базе данных...");
 
-            object faculty = new DataBase(messageInfo.Text, messageInfo.Chat.Id, new LocalPathDB("Database")).ExcecuteCommand($"SELECT Facult FROM UserTable WHERE ChatId = '{chatId}'");
+            object faculty = new DataBase(messageInfo.Text, messageInfo.Chat.Id, new LocalPathDb("Database")).ExcecuteCommand($"SELECT Facult FROM UserTable WHERE ChatId = '{chatId}'");
 
             if (faculty != null)
             {

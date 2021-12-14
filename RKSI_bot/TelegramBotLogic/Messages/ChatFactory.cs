@@ -9,6 +9,6 @@ namespace RKSI_bot.TelegramBotClasses.Messages
 
         public ChatType ChatType;
 
-        public abstract ICommand FindCommand(string message);
+        public abstract ICommand FindCommand(Telegram.Bot.Types.Message messageInfo);
     }
 }

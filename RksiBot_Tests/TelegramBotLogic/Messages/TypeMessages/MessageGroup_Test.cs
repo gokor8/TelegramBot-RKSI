@@ -19,15 +19,30 @@ namespace RksiBot_Tests.Messages_Tests.TypeMessages_Test
         [Theory]
         [InlineData("Покс-34")]
         [InlineData("Покс-34b")]
-        public void Invoke_GroupMessage_ReturnMessage(string message)
+        public void Invoke_Message_ReturnMessage(string message, string keyWord = "")
         {
             message = message.Replace("b", "").Replace("w", "");
 
             long chatID = 399418047;
 
-            var group = new MessageGroup(new LocalPathDB("Database"));
+            var group = new MessageGroup(new LocalPathDb("Database"));
 
-            group.Invoke(message.ToUpper(), chatID);
+            group.Invoke(message.ToUpper(), keyWord, chatID);
+
+        }
+
+        [Theory]
+        [InlineData("Покс-34", "пары ")]
+        [InlineData("Покс-34b", "пары ")]
+        public void Invoke_GroupFactoryMessage_ReturnMessage(string message, string keyWord = "")
+        {
+            message = message.Replace("b", "").Replace("w", "");
+
+            long chatID = -419002292;
+
+            var group = new MessageGroup(new LocalPathDb("Database"));
+
+            group.Invoke(message.ToUpper(), keyWord, chatID);
         }
     }
 }

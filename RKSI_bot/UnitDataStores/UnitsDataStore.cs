@@ -4,7 +4,7 @@ using RKSI_bot.Web.Parsing;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RKSI_bot.Schedule.Containers
+namespace RKSI_bot.Schedule.UnitDataStores
 {
     public abstract class UnitsDataStore
     {

@@ -12,21 +12,21 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
     {
         private DataBase userGroup;
         private GroupsDataStore groupsContainer;
-        private string _addWord;
-        public MessageGroup(IPathDB pathDB, string addWord = "")
+
+        public MessageGroup(IPathDB pathDB)
         {
             userGroup = new DataBase(pathDB);
 
-            _addWord = addWord;
             groupsContainer = GroupsDataStore.GetInstance();
         }
+        public bool IsSended { get; private set; }
 
         public bool CheckTrigger(string message)
         {
-            return message.Any(x=>char.IsDigit(x));
+            return message.Any(x => char.IsDigit(x));
         }
 
-        public void Invoke(string message, long chatId)
+        public void Invoke(string message, string keyWord, long chatId)
         {
             string foundGroup = groupsContainer.GetClearTitels().FirstOrDefault(g => message.Equals(g.ToUpper()));
 
@@ -34,18 +34,19 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
             {
                 foundGroup = groupsContainer.GetTitels().FirstOrDefault(g => g.Contains(foundGroup));
 
-                RefreshKeyboard(foundGroup, chatId);
+                RefreshKeyboard(keyWord + foundGroup, chatId);
                 HttpRKSI.GetInstace().SendScheduleMessage(foundGroup, chatId, new GroupsSchedule()).Wait();
+                IsSended = true;
             }
             else
             {
-                TelegramBot.Bot.SendTextMessageAsync(chatId, "Такой группы нету");
+                TelegramBot.Bot.SendTextMessageAsync(chatId, "Такой группы нету").Wait();
+                IsSended = false;
             }
         }
 
         private void RefreshKeyboard(string message, long chatId)
         {
-            message += _addWord + message;
             TelegramUserKeyboard userKeyboard = new TelegramUserKeyboard();
 
             object group = userGroup.ExcecuteCommand($"SELECT Facult FROM ButtonFacultTable WHERE ChatId = '{chatId}'");
@@ -60,7 +61,7 @@ namespace RKSI_bot.TelegramBotClasses.MessageComands.Objects.CommandsChannel.Nud
                     TelegramBot.Bot.SendTextMessageAsync(chatId, "Группа добавлена на клавиатуру", replyMarkup: markupKeyboard);
                 }
             }
-            else if (!group.ToString().Contains(message))
+            else if (!group.ToString().ToUpper().Equals(message.ToUpper()))
             {
                 if (userGroup.GetBool(userGroup.ExcecuteCommand($"UPDATE ButtonFacultTable SET Facult = N'{message}' WHERE ChatId = '{chatId}'")))
                 {

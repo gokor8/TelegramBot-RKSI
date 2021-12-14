@@ -7,11 +7,19 @@ namespace RKSI_bot.Comand_Message.Objects.Commands_Group_Objects
     {
         public string[] Triggers { get; set; }
 
-        public bool IsExecuted { get; private set; }
+        private string _keyWord = "";
+        public bool IsExecuted { get; set; }
 
         public Message(params string[] triggers)
         {
             Triggers = triggers;
+        }
+
+        public Message SetKeyWord(string keyWord)
+        {
+            _keyWord = keyWord;
+
+            return this;
         }
 
         public void Execute(Telegram.Bot.Types.Message messageInfo)
@@ -23,7 +31,7 @@ namespace RKSI_bot.Comand_Message.Objects.Commands_Group_Objects
 
             if (messageSender != null)
             {
-                messageSender.Invoke(message, chatId);
+                messageSender.Invoke(message, _keyWord, chatId);
                 IsExecuted = true;
             }
         }

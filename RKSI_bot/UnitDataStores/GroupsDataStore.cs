@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RKSI_bot.SchedulesContainer
+namespace RKSI_bot.UnitDataStores
 {
     public sealed class GroupsDataStore : UnitsDataStore
     {
@@ -19,19 +19,24 @@ namespace RKSI_bot.SchedulesContainer
         {
             using (var context = new CollageUnitsDb())
             {
-                var groups = context.Groups.Select(x => x.Name).ToList();
-
-                bool IsEqual = Titels.SequenceEqual(groups);
-
-                if (!IsEqual)
+                try
                 {
-                    context.Groups.RemoveRange(context.Groups);
+                    var groups = context.Groups.Select(x => x.Name).ToList();
 
-                    foreach (var group in Titels)
-                        context.Groups.Add(new Group() { Name = group });
+                    bool IsEqual = Titels.SequenceEqual(groups);
 
-                    context.SaveChanges();
+                    if (!IsEqual)
+                    {
+                        context.Groups.RemoveRange(context.Groups);
+
+                        foreach (var group in Titels)
+                            context.Groups.Add(new Group() { Name = group });
+
+                        context.SaveChanges();
+                    }
+
                 }
+                catch (Exception e) { Console.WriteLine(e); }
             }
         }
 

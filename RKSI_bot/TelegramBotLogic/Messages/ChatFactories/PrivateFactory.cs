@@ -18,13 +18,15 @@ namespace RKSI_bot.TelegramBotClasses.Messages.ChatFactories
                 new List("/list", "🕴"),
                 new Start("/start", "/help", "🦾"),
                 new Group("/group", "🏫"),
-                new Message(".","-"),
+                new Message(new string[]{".","-" }),
                 new Admin("вайяяя")
             };
         }
 
-        public override ICommand FindCommand(string message)
+        public override ICommand FindCommand(Telegram.Bot.Types.Message messageInfo)
         {
+            string message = messageInfo.Text;
+
             foreach (var command in _commands)
             {
                 foreach (var foundTrigger in command.Triggers)

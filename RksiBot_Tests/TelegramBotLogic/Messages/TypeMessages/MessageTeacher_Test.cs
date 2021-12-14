@@ -19,13 +19,13 @@ namespace RksiBot_Tests
         [InlineData("Арутюнян М.М.")] // Не будет работаь, так как есть пробелы. В проде они убираются
         [InlineData("АрутюнянМ.М")]
         [InlineData("Арутюнян")]
-        public void Invoke_TeacherMessage_ReturnMessage(string message)
+        public void Invoke_TeacherMessage_ReturnMessage(string message, string keyWord = "")
         {
             long chatID = 399418047;
 
             var teacher = new MessageTeacher();
 
-            teacher.Invoke(message.ToUpper(),chatID);
+            teacher.Invoke(message.ToUpper(), keyWord, chatID);
         }
     }
 }

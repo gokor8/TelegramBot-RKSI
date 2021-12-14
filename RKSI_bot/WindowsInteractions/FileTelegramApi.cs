@@ -7,7 +7,7 @@ namespace RKSI_bot.WindowsInteractions
 {
     public class FileTelegramApi
     {
-        private readonly string _pathToFile = @"C:\Users\gvala\OneDrive\Рабочий стол\BotToken.txt";
+        private readonly string _pathToFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\BotToken.txt";
 
         public FileTelegramApi()
         { }

@@ -1,4 +1,5 @@
-﻿using RKSI_bot.Databases.EntityDataBase.Tables;
+﻿using Microsoft.Extensions.Configuration;
+using RKSI_bot.Databases.EntityDataBase.Tables;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,10 +9,12 @@ namespace RKSI_bot.Databases.EntityDataBase
 {
     public class CollageUnitsDb : DbContext
     {
-        private const string Path_Db = @"C:\Users\gvala\OneDrive\Рабочий стол\TelegramBot-RKSI\RKSI_bot\Databases\DatabaseCollegeUnits.mdf";
-        private const string CONNECTION_STRING = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="+ Path_Db + ";Integrated Security=True";
+        private static readonly IConfigurationSection _config = StartupConfig.GetInstance().Configuration.GetSection("ConnectionStrings");
 
-        public CollageUnitsDb() : base(CONNECTION_STRING)
+        private static readonly string _connectionString = $@"{_config["FirstStringConnection"]}
+            DatabaseCollegeUnits.mdf{_config["LastStringConnection"]}";
+
+        public CollageUnitsDb() : base(_connectionString)
         {
 
         }
